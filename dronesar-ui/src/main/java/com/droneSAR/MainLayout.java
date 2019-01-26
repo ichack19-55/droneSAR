@@ -7,7 +7,7 @@ import com.vaadin.flow.router.RouterLayout;
 import com.vaadin.flow.server.PWA;
 import com.vaadin.flow.theme.Theme;
 import com.vaadin.flow.theme.lumo.Lumo;
-import com.droneSAR.about.AboutView;
+import com.droneSAR.review.ReviewFootageView;
 import com.droneSAR.crud.SampleCrudView;
 
 /**
@@ -24,10 +24,8 @@ public class MainLayout extends FlexLayout implements RouterLayout {
         setClassName("main-layout");
 
         menu = new Menu();
-        menu.addView(SampleCrudView.class, SampleCrudView.VIEW_NAME,
-                VaadinIcon.EDIT.create());
-        menu.addView(AboutView.class, AboutView.VIEW_NAME,
-                VaadinIcon.INFO_CIRCLE.create());
+        menu.addView(SampleCrudView.class, SampleCrudView.VIEW_NAME, VaadinIcon.EDIT.create());
+        menu.addView(ReviewFootageView.class, ReviewFootageView.VIEW_NAME, VaadinIcon.INFO_CIRCLE.create());
 
         add(menu);
     }
