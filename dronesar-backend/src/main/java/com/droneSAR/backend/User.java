@@ -19,6 +19,7 @@ public class User {
         // TODO:
     }
 
+    /*
     public void playFootage() {
         // TODO:
     }
@@ -29,6 +30,10 @@ public class User {
 
     public void requestNewFootage() {
         // TODO:
+    }
+    */
+    public void requestNewPicture() {
+        this.picture = Store.getInstance().
     }
 
     public void flagFootage() {

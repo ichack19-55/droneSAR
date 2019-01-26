@@ -30,6 +30,11 @@ public class Store {
     return this.totalHitCount;
   }
 
+  public Picture getPicture() {
+    // TODO
+    return null;
+  }
+
   public User getUserFromHit(Integer hit){
     return hitsUser.get(hit);
   }
