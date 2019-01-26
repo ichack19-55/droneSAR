@@ -1,12 +1,13 @@
 package com.droneSAR.backend;
 
-import java.util.HashMap;
+import java.util.Set;
 
 public class SARAdmin extends User {
 
+    private static final CampaignStore campaignStore = CampaignStore.getInstance();
     private static final int NULL_CAMPAIGN_ID = -1;
-    private HashMap<Integer, Campaign> campaigns;
     private int createdCampaignId;
+    private Campaign campaign;
 
     public SARAdmin(int userId) {
         super(userId);
@@ -15,8 +16,8 @@ public class SARAdmin extends User {
     public void createCampaign(){
         // Can only create one campaign:
         if (!this.hasCampaignBeenCreated()) {
-            Campaign campaign = new Campaign();
-            campaigns.put(campaign.getCampaignId(), campaign);
+            this.campaign = new Campaign();
+            CampaignStore.getInstance().addCampaign(campaign);
         } else {
             // Campaign already created!
         }
@@ -24,7 +25,16 @@ public class SARAdmin extends User {
 
     public void deleteCampaign() {
         if (this.hasCampaignBeenCreated()) {
-            CampaignStore.getInstance().removeCampaign(createdCampaignId);
+
+            Campaign campaign = campaignStore.getCampaign(createdCampaignId);
+            Set<User> crowdReviewers = campaign.getCrowdReviewers();
+
+            // unsubscribe all users to campaign:
+            for (User user : crowdReviewers) {
+                user.unsubscribeTo(createdCampaignId);
+            }
+
+            campaignStore.removeCampaign(campaign);
             this.setCreatedCampaignIdToNullId();
         }
     }
@@ -35,5 +45,13 @@ public class SARAdmin extends User {
 
     private void setCreatedCampaignIdToNullId() {
         this.createdCampaignId = this.NULL_CAMPAIGN_ID;
+    }
+
+    public void addDroneClip(DroneClip clip){
+        campaign.addDroneClip(clip);
+    }
+
+    public void removeDroneClip(DroneClip clip){
+        campaign.removeDroneClip(clip);
     }
 }

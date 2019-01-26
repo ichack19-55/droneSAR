@@ -25,6 +25,10 @@ public class CampaignStore {
     this.campaignStore.put(campaign.getCampaignId(), campaign);
   }
 
+  public Campaign getCampaign(int id) {
+    return this.campaignStore.get(id);
+  }
+
   public void removeCampaign(Campaign campaign) {
     this.campaignStore.remove(campaign.getCampaignId());
   }
