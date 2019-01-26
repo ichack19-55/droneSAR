@@ -1,5 +1,6 @@
 package com.droneSAR.backend;
 
+
 public class User {
 
     private final int userId;
@@ -14,6 +15,7 @@ public class User {
     }
 
     public void viewFootage() {
+        Store.getInstance().putUserFootage(this, footage);
         // TODO:
     }
 
@@ -29,8 +31,9 @@ public class User {
         // TODO:
     }
 
-    public void flagFootage(RESCUE_PRIORITY rescue_priority) {
-        // TODO:
+    public void flagFootage() {
+        Store.getInstance().putHits(Store.getInstance().hitCount, footage, this);
+
     }
 
 

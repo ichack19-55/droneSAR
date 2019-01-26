@@ -6,31 +6,39 @@ import java.util.Map;
 public class Store {
 
   //store: hits - user, hits - footage, user - footage
-
+  private static Store store;
   Map<Integer, User> hitsUser;
   Map<Integer, Footage> hitsFootage;
   Map<User, Footage> userFootage;
+  Integer hitCount;
 
-  public Store(){
+  private Store(){
     hitsUser = new HashMap<>();
     hitsFootage = new HashMap<>();
     userFootage = new HashMap<>();
+    hitCount = 0;
+  }
+
+  public static Store getInstance() {
+    if (store == null) {
+      store = new Store();
+    }
+    return store;
   }
 
   public User getUserFromHit(Integer hit){
     return hitsUser.get(hit);
   }
 
-  public void putUserHit(Integer hit, User user){
-    hitsUser.put(hit, user);
-  }
 
   public Footage getFootageFromHit(Integer hit){
     return hitsFootage.get(hit);
   }
 
-  public void putHitsFootage(Integer hit, Footage footage){
+  public void putHits(Integer hit, Footage footage, User user){
     hitsFootage.put(hit, footage);
+    hitsUser.put(hit, user);
+    hitCount++;
   }
 
   public Footage getFootageFromUser(User user){
