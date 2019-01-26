@@ -26,16 +26,16 @@ import com.vaadin.flow.router.Route;
 @HtmlImport("css/shared-styles.html")
 public class LoginScreen extends FlexLayout {
 
+    private TextField campaign;
     private TextField username;
     private PasswordField password;
     private Button login;
-    private Button forgotPassword;
     private AccessControl accessControl;
 
     public LoginScreen() {
         accessControl = AccessControlFactory.getInstance().createAccessControl();
         buildUI();
-        username.focus();
+        campaign.focus();
     }
 
     private void buildUI() {
@@ -64,6 +64,9 @@ public class LoginScreen extends FlexLayout {
 
         loginForm.setWidth("310px");
 
+        loginForm.addFormItem(campaign = new TextField(), "Campaign");
+        campaign.setWidth("15em");
+        campaign.setValue("EmilianoSala");
         loginForm.addFormItem(username = new TextField(), "Username");
         username.setWidth("15em");
         username.setValue("admin");
@@ -79,10 +82,6 @@ public class LoginScreen extends FlexLayout {
         login.addClickListener(event -> login());
         loginForm.getElement().addEventListener("keypress", event -> login()).setFilter("event.key == 'Enter'");
         login.addThemeVariants(ButtonVariant.LUMO_SUCCESS, ButtonVariant.LUMO_PRIMARY);
-
-        buttons.add(forgotPassword = new Button("Forgot password?"));
-        forgotPassword.addClickListener(event -> showNotification(new Notification("Hint: try anything")));
-        forgotPassword.addThemeVariants(ButtonVariant.LUMO_TERTIARY);
 
         return loginForm;
     }
