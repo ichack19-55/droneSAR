@@ -6,7 +6,7 @@ import java.util.LinkedHashMap;
 public class User {
 
     private final int userId;
-    HashMap<Integer, Campaign> subscribedCampaigns;
+    private HashMap<Integer, Campaign> subscribedCampaigns;
 
     public User(int userId) {
         this.userId = userId;
