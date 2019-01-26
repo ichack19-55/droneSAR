@@ -1,22 +1,24 @@
 package com.droneSAR.backend;
 
+import java.util.HashMap;
+import java.util.LinkedHashMap;
 
 public class User {
 
     private final int userId;
-    private Picture picture;
+    HashMap<Integer, Campaign> subscribedCampaigns;
 
     public User(int userId) {
         this.userId = userId;
+        this.subscribedCampaigns = new LinkedHashMap<>();
+    }
+
+    public void subscribeTo(Campaign campaign){
+        this.subscribedCampaigns.put(campaign.getCampaignId(), campaign);
     }
 
     public int getUserId() {
         return this.userId;
-    }
-
-    public void viewPicture() {
-        Store.getInstance().putUserFootage(this, picture);
-        // TODO:
     }
 
     public void playFootage() {
@@ -32,7 +34,7 @@ public class User {
     }
 
     public void flagFootage() {
-        Store.getInstance().putHits(Store.getInstance().getTotalHitCount(), picture, this);
+        //Store.getInstance().putHits(Store.getInstance().getTotalHitCount(), picture, this);
 
     }
 
