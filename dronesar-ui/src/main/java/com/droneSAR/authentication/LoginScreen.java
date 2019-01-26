@@ -32,8 +32,15 @@ public class LoginScreen extends FlexLayout {
     private Button login;
     private AccessControl accessControl;
 
+    private TextField crowdUsername;
+    private PasswordField crowdPassword;
+    private Button crowdLogin;
+    private AccessControl crowdAccessControl;
+
     public LoginScreen() {
         accessControl = AccessControlFactory.getInstance().createAccessControl();
+        crowdAccessControl = AccessControlFactory.getInstance().createAccessControl(); // TODO
+
         buildUI();
         campaign.focus();
     }
@@ -44,6 +51,7 @@ public class LoginScreen extends FlexLayout {
 
         // login form, centered in the available part of the screen
         Component loginForm = buildLoginForm();
+        Component crowdLoginForm = buildCrowdLoginForm();
 
         // layout to center login form when there is sufficient screen space
         FlexLayout centeringLayout = new FlexLayout();
@@ -51,6 +59,7 @@ public class LoginScreen extends FlexLayout {
         centeringLayout.setJustifyContentMode(JustifyContentMode.CENTER);
         centeringLayout.setAlignItems(Alignment.CENTER);
         centeringLayout.add(loginForm);
+        centeringLayout.add(crowdLoginForm);
 
         // information text about logging in
         Component loginInformation = buildLoginInformation();
@@ -67,10 +76,13 @@ public class LoginScreen extends FlexLayout {
         loginForm.addFormItem(campaign = new TextField(), "Campaign");
         campaign.setWidth("15em");
         campaign.setValue("EmilianoSala");
+
         loginForm.addFormItem(username = new TextField(), "Username");
         username.setWidth("15em");
         username.setValue("admin");
+
         loginForm.add(new Html("<br/>"));
+
         loginForm.addFormItem(password = new PasswordField(), "Password");
         password.setWidth("15em");
 
@@ -80,8 +92,32 @@ public class LoginScreen extends FlexLayout {
 
         buttons.add(login = new Button("Login"));
         login.addClickListener(event -> login());
-        loginForm.getElement().addEventListener("keypress", event -> login()).setFilter("event.key == 'Enter'");
         login.addThemeVariants(ButtonVariant.LUMO_SUCCESS, ButtonVariant.LUMO_PRIMARY);
+
+        return loginForm;
+    }
+
+    private Component buildCrowdLoginForm() {
+        FormLayout loginForm = new FormLayout();
+
+        loginForm.setWidth("310px");
+
+        loginForm.addFormItem(crowdUsername = new TextField(), "Username");
+        crowdUsername.setWidth("15em");
+        crowdUsername.setValue("admin");
+
+        loginForm.add(new Html("<br/>"));
+
+        loginForm.addFormItem(crowdPassword = new PasswordField(), "Password");
+        crowdPassword.setWidth("15em");
+
+        HorizontalLayout buttons = new HorizontalLayout();
+        loginForm.add(new Html("<br/>"));
+        loginForm.add(buttons);
+
+        buttons.add(crowdLogin = new Button("Login"));
+        crowdLogin.addClickListener(event -> crowdLogin());
+        crowdLogin.addThemeVariants(ButtonVariant.LUMO_SUCCESS, ButtonVariant.LUMO_PRIMARY);
 
         return loginForm;
     }
@@ -90,9 +126,9 @@ public class LoginScreen extends FlexLayout {
         VerticalLayout loginInformation = new VerticalLayout();
         loginInformation.setClassName("login-information");
 
-        H1 loginInfoHeader = new H1("Login Information");
-        Span loginInfoText = new Span(
-                "Log in as \"admin\" to have full access. Log in with any other username to have read-only access. For all users, any password is fine.");
+        H1 loginInfoHeader = new H1("DroneSAR");
+        Span loginInfoText = new Span("Log in using the left hand form if you are an "
+            + "administrator to a campaign. Otherwise use the right hand form.");
         loginInformation.add(loginInfoHeader);
         loginInformation.add(loginInfoText);
 
@@ -105,12 +141,25 @@ public class LoginScreen extends FlexLayout {
             if (accessControl.signIn(username.getValue(), password.getValue())) {
                 getUI().get().navigate("");
             } else {
-                showNotification(new Notification("Login failed. " +
-                        "Please check your username and password and try again."));
-                username.focus();
+                showNotification(new Notification("Login failed."));
+                campaign.focus();
             }
         } finally {
             login.setEnabled(true);
+        }
+    }
+
+    private void crowdLogin() {
+        crowdLogin.setEnabled(false);
+        try {
+            if (crowdAccessControl.signIn(crowdUsername.getValue(), crowdPassword.getValue())) {
+                getUI().get().navigate("");
+            } else {
+                showNotification(new Notification("Login failed."));
+                campaign.focus();
+            }
+        } finally {
+            crowdLogin.setEnabled(true);
         }
     }
 
