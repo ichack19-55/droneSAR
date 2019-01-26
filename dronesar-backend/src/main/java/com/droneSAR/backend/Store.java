@@ -7,16 +7,16 @@ public class Store {
 
   //store: hits - user, hits - footage, user - footage
   private static Store store;
-  Map<Integer, User> hitsUser;
-  Map<Integer, Footage> hitsFootage;
-  Map<User, Footage> userFootage;
-  Integer hitId;
+  private Map<Integer, User> hitsUser;
+  private Map<Integer, Footage> hitsFootage;
+  private Map<User, Footage> userFootage;
+  private Integer totalHitCount;
 
   private Store(){
     hitsUser = new HashMap<>();
     hitsFootage = new HashMap<>();
     userFootage = new HashMap<>();
-    hitId = 0;
+    totalHitCount = 0;
   }
 
   public static Store getInstance() {
@@ -24,6 +24,10 @@ public class Store {
       store = new Store();
     }
     return store;
+  }
+
+  public Integer getTotalHitCount() {
+    return this.totalHitCount;
   }
 
   public User getUserFromHit(Integer hit){
@@ -38,7 +42,7 @@ public class Store {
   public void putHits(Integer hit, Footage footage, User user){
     hitsFootage.put(hit, footage);
     hitsUser.put(hit, user);
-    hitId++;
+    totalHitCount++;
   }
 
   public Footage getFootageFromUser(User user){
