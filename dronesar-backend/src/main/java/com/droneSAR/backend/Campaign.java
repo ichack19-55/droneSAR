@@ -5,8 +5,18 @@ import java.util.Set;
 
 public class Campaign {
 
-    SARAdmin owner;
-    Set<User> crowdReviewers;
-    List<DroneClip> droneClips;
+    private static int id;
+    private final int campaignId;
+    private SARAdmin owner;
+    private Set<User> crowdReviewers;
+    private List<DroneClip> droneClips;
 
+    public Campaign(){
+        this.campaignId = id;
+        id++;
+    }
+
+    public int getCampaignId(){
+        return campaignId;
+    }
 }
