@@ -1,14 +1,20 @@
 package com.droneSAR.backend;
 
-//import org.bytedeco.javacv.FFmpegFrameGrabber;
-//import org.bytedeco.javacv.FrameGrabber;
+import org.bytedeco.javacv.FFmpegFrameGrabber;
+import org.bytedeco.javacv.Java2DFrameConverter;
 
-//import javax.imageio.ImageIO;
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.IOException;
 import java.util.HashSet;
 import java.util.Set;
 
+import static org.bytedeco.javacv.Java2DFrameUtils.deepCopy;
+
 public class DroneClip {
+
+    private static final int SECONDS_TO_MICRO = 1000 * 1000;
 
     private final File video;
 
@@ -45,24 +51,30 @@ public class DroneClip {
 
     }
 
-    public void extractFrame(int millis) {
-        /*FFmpegFrameGrabber g = new FFmpegFrameGrabber(video);
-        try {
-            g.start();
-
-            for (int i = 0; i < 50; i++) {
-                ImageIO.write(g.grab().getBufferedImage(), "png", new File(
-                    "frame-dump/video-frame-" + System.currentTimeMillis() + ".png"));
+    // CURRENTLY WRITES TOI FILE AND OPENS FILE MACOS ONLY
+    // TODO: can only process MPEG footage currently
+    // TODO: what now boss? what should this function do?
+    public void getFrameAtTimestamp(int seconds) {
+        try (FFmpegFrameGrabber frameGrabber = new FFmpegFrameGrabber(video)) {
+            frameGrabber.start();
+            int micro = seconds * SECONDS_TO_MICRO;
+            if (micro > frameGrabber.getLengthInTime()) {
+                return;
             }
+            frameGrabber.setTimestamp(micro);
 
-            g.stop();
-        } catch (FrameGrabber.Exception e) {
+            Java2DFrameConverter converter = new Java2DFrameConverter();
+            BufferedImage bufferedImage = deepCopy(converter.convert(frameGrabber.grabImage()));
+
+            // Write frame grab to temp file
+            File img = File.createTempFile("insta", ".jpg");
+            ImageIO.write(bufferedImage, "JPG", img);
+
+            ProcessBuilder pb = new ProcessBuilder("open", img.getAbsolutePath());
+            pb.start();
+
+        } catch (IOException e) {
             e.printStackTrace();
-        }*/
-    }
-
-    private void splitFootageIntoSegments(/*input file*/) {
-        // getFootage(/*input file*/) - function in Footage to return list of small footages from input.
-        // then add to store
+        }
     }
 }
