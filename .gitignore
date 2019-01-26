@@ -1,6 +1,10 @@
 # Compiled class file
 *.class
 
+# Intellij and build files
+.idea
+target/
+
 # Log file
 *.log
 
