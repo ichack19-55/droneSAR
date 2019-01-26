@@ -21,6 +21,7 @@ public class User {
         return this.userId;
     }
 
+    /*
     public void playFootage() {
         // TODO:
     }
@@ -32,6 +33,7 @@ public class User {
     public void requestNewFootage() {
         // TODO:
     }
+    */
 
     public void flagFootage() {
         //Store.getInstance().putHits(Store.getInstance().getTotalHitCount(), picture, this);
