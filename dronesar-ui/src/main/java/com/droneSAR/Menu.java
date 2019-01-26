@@ -48,7 +48,7 @@ public class Menu extends FlexLayout {
         // Note! Image resource url is resolved here as it is dependent on the
         // execution mode (development or production) and browser ES level support
         String resolvedImage = VaadinServletService.getCurrent()
-                .resolveResource("frontend://img/drone.jpeg",
+                .resolveResource("frontend://img/drone_small.jpeg",
                         VaadinSession.getCurrent().getBrowser());
 
         Image image = new Image(resolvedImage, "");
