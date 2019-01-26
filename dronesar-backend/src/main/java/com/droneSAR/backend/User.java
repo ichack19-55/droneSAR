@@ -18,6 +18,10 @@ public class User {
         this.subscribedCampaigns.put(campaign.getCampaignId(), campaign);
     }
 
+    public void unsubscribeTo(int id) {
+        this.subscribedCampaigns.remove(id);
+    }
+
     public Set<Integer> getSubscribedCampaignIds() {
         return this.subscribedCampaigns.keySet();
     }

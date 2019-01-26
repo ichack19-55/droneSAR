@@ -1,11 +1,11 @@
 package com.droneSAR.backend;
 
-import java.util.HashMap;
+import java.util.Set;
 
 public class SARAdmin extends User {
 
+    private static final CampaignStore campaignStore = CampaignStore.getInstance();
     private static final int NULL_CAMPAIGN_ID = -1;
-    private HashMap<Integer, Campaign> campaigns;
     private int createdCampaignId;
 
     public SARAdmin(int userId) {
@@ -16,7 +16,7 @@ public class SARAdmin extends User {
         // Can only create one campaign:
         if (!this.hasCampaignBeenCreated()) {
             Campaign campaign = new Campaign();
-            campaigns.put(campaign.getCampaignId(), campaign);
+            CampaignStore.getInstance().addCampaign(campaign);
         } else {
             // Campaign already created!
         }
@@ -24,7 +24,16 @@ public class SARAdmin extends User {
 
     public void deleteCampaign() {
         if (this.hasCampaignBeenCreated()) {
-            CampaignStore.getInstance().removeCampaign(createdCampaignId);
+
+            Campaign campaign = campaignStore.getCampaign(createdCampaignId);
+            Set<User> crowdReviewers = campaign.getCrowdReviewers();
+
+            // unsubscribe all users to campaign:
+            for (User user : crowdReviewers) {
+                user.unsubscribeTo(createdCampaignId);
+            }
+
+            campaignStore.removeCampaign(campaign);
             this.setCreatedCampaignIdToNullId();
         }
     }

@@ -19,4 +19,8 @@ public class Campaign {
     public int getCampaignId(){
         return campaignId;
     }
+
+    public Set<User> getCrowdReviewers() {
+        return this.crowdReviewers;
+    }
 }
