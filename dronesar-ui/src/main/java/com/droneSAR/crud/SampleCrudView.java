@@ -13,7 +13,6 @@ import com.vaadin.flow.router.OptionalParameter;
 import com.vaadin.flow.router.Route;
 import com.vaadin.flow.router.RouteAlias;
 import com.droneSAR.MainLayout;
-import com.droneSAR.backend.DataService;
 import com.droneSAR.backend.data.Product;
 
 /**

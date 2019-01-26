@@ -3,7 +3,6 @@ package com.droneSAR.crud;
 import com.vaadin.flow.component.UI;
 import com.droneSAR.authentication.AccessControl;
 import com.droneSAR.authentication.AccessControlFactory;
-import com.droneSAR.backend.DataService;
 import com.droneSAR.backend.data.Product;
 
 import java.io.Serializable;
