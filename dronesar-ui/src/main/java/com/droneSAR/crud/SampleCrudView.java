@@ -69,15 +69,15 @@ public class SampleCrudView extends HorizontalLayout
         // Apply the filter to grid's data provider. TextField value is never null
         filter.addValueChangeListener(event -> dataProvider.setFilter(event.getValue()));
 
-//        newProduct = new Button("New product");
-//        newProduct.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
-//        newProduct.setIcon(VaadinIcon.PLUS_CIRCLE.create());
-//        newProduct.addClickListener(click -> viewLogic.newProduct());
+        newProduct = new Button("New campaign");
+        newProduct.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
+        newProduct.setIcon(VaadinIcon.PLUS_CIRCLE.create());
+        newProduct.addClickListener(click -> viewLogic.newProduct());
 
         HorizontalLayout topLayout = new HorizontalLayout();
         topLayout.setWidth("100%");
         topLayout.add(filter);
-        //topLayout.add(newProduct);
+        topLayout.add(newProduct);
         topLayout.setVerticalComponentAlignment(Alignment.START, filter);
         topLayout.expand(filter);
         return topLayout;

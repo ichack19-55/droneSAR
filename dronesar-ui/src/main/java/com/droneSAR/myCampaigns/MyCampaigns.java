@@ -1,4 +1,4 @@
-package com.droneSAR.discover;
+package com.droneSAR.myCampaigns;
 
 import com.droneSAR.MainLayout;
 import com.droneSAR.crud.ProductDataProvider;
@@ -14,27 +14,26 @@ import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 
-@Route(value = "DiscoverCampaigns", layout = MainLayout.class)
-@PageTitle("Discover Campaigns")
-public class DiscoverCampaigns extends HorizontalLayout {
 
-    public static final String VIEW_NAME = "Discover Campaigns";
+@Route(value = "MyCampaigns", layout = MainLayout.class)
+@PageTitle("My Campaigns")
+public class MyCampaigns extends HorizontalLayout {
+
+    public static final String VIEW_NAME = "My Campaigns";
 
     private ProductGrid grid;
     private TextField filter;
+    private CampaignForm form;
+    private Button newCampaign;
 
-    //private SampleCrudLogic viewLogic = new SampleCrudLogic(this);
     private ProductDataProvider dataProvider = new ProductDataProvider();
 
-    public DiscoverCampaigns() {
+    public MyCampaigns(){
         setSizeFull();
-
+        form = new CampaignForm(this);
+        showForm(false);
         HorizontalLayout topLayout = createTopBar();
-
         grid = new ProductGrid();
-        //grid.asSingleSelect().addValueChangeListener(
-                //event -> viewLogic.rowSelected(event.getValue()));
-
         VerticalLayout barAndGridLayout = new VerticalLayout();
         barAndGridLayout.add(topLayout);
         barAndGridLayout.add(grid);
@@ -42,8 +41,8 @@ public class DiscoverCampaigns extends HorizontalLayout {
         barAndGridLayout.setFlexGrow(0, topLayout);
         barAndGridLayout.setSizeFull();
         barAndGridLayout.expand(grid);
-
         add(barAndGridLayout);
+        add(form);
     }
 
     public HorizontalLayout createTopBar() {
@@ -53,11 +52,26 @@ public class DiscoverCampaigns extends HorizontalLayout {
         filter.addValueChangeListener(event -> dataProvider.setFilter(event.getValue()));
 
         HorizontalLayout topLayout = new HorizontalLayout();
+
+        newCampaign = new Button("Add Campaign");
+        newCampaign.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
+        newCampaign.setIcon(VaadinIcon.PLUS_CIRCLE.create());
+        newCampaign.addClickListener(event -> showForm(true));
+//        Disable if user already has campaign
+//        if(user has campaign){
+//            newCampaign.isEnabled(false);
+//        }
+
+
         topLayout.setWidth("100%");
         topLayout.add(filter);
+        topLayout.add(newCampaign);
         topLayout.setVerticalComponentAlignment(Alignment.START, filter);
         topLayout.expand(filter);
         return topLayout;
     }
 
+    public void showForm(boolean show){
+        form.setVisible(show);
+    }
 }

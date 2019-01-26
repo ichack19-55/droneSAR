@@ -33,7 +33,7 @@ public class ReviewFootageView extends HorizontalLayout {
         campaignName = "Placeholder Campaign Name";
         setSizeFull();
         HorizontalLayout topLayout = createTopBar();
-        LoadStaticImage();
+        LoadStaticImage(null);
         VerticalLayout barAndImages = new VerticalLayout();
         barAndImages.add(topLayout);
         barAndImages.add(img);
@@ -43,12 +43,13 @@ public class ReviewFootageView extends HorizontalLayout {
         add(barAndImages);
     }
 
-    public void LoadStaticImage(){
-        String resolvedImage = VaadinServletService.getCurrent()
-                .resolveResource("frontend://img/Placeholder.png",
-                        VaadinSession.getCurrent().getBrowser());
-
-        img = new Image(resolvedImage, "");
+    public void LoadStaticImage(String filepath){
+        if(filepath== null) {
+            String resolvedImage = VaadinServletService.getCurrent()
+                    .resolveResource("frontend://img/Placeholder.png",
+                            VaadinSession.getCurrent().getBrowser());
+        }
+        img = new Image(filepath, "");
         img.setWidth("100%");
     }
 

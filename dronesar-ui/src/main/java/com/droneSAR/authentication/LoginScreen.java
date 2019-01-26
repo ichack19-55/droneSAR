@@ -48,7 +48,6 @@ public class LoginScreen extends FlexLayout {
         setClassName("login-screen");
 
         // login form, centered in the available part of the screen
-        //Component loginForm = buildLoginForm();
         Component crowdLoginForm = buildCrowdLoginForm();
 
         // layout to center login form when there is sufficient screen space
@@ -56,7 +55,6 @@ public class LoginScreen extends FlexLayout {
         centeringLayout.setSizeFull();
         centeringLayout.setJustifyContentMode(JustifyContentMode.CENTER);
         centeringLayout.setAlignItems(Alignment.CENTER);
-        //centeringLayout.add(loginForm);
         centeringLayout.add(crowdLoginForm);
 
         // information text about logging in
@@ -66,34 +64,6 @@ public class LoginScreen extends FlexLayout {
         add(centeringLayout);
     }
 
-//    private Component buildLoginForm() {
-//        FormLayout loginForm = new FormLayout();
-//
-//        loginForm.setWidth("310px");
-//
-//        loginForm.addFormItem(campaign = new TextField(), "Campaign");
-//        campaign.setWidth("15em");
-//        campaign.setValue("EmilianoSala");
-//
-//        loginForm.addFormItem(username = new TextField(), "Username");
-//        username.setWidth("15em");
-//        username.setValue("admin");
-//
-//        loginForm.add(new Html("<br/>"));
-//
-//        loginForm.addFormItem(password = new PasswordField(), "Password");
-//        password.setWidth("15em");
-//
-//        HorizontalLayout buttons = new HorizontalLayout();
-//        loginForm.add(new Html("<br/>"));
-//        loginForm.add(buttons);
-//
-//        buttons.add(login = new Button("Login"));
-//        login.addClickListener(event -> login());
-//        login.addThemeVariants(ButtonVariant.LUMO_SUCCESS, ButtonVariant.LUMO_PRIMARY);
-//
-//        return loginForm;
-//    }
 
     private Component buildCrowdLoginForm() {
         FormLayout loginForm = new FormLayout();
@@ -127,32 +97,19 @@ public class LoginScreen extends FlexLayout {
 
         H1 loginInfoHeader = new H1("DroneSAR");
         Span loginInfoText = new Span("Crowdsourced search and rescue "
-            + "enabling rescue crews around the world to save lives quicker");
+            + "enabling rescue crews around the world to save lives quicker.");
         loginInformation.add(loginInfoHeader);
         loginInformation.add(loginInfoText);
 
         return loginInformation;
     }
 
-//    private void login() {
-//        login.setEnabled(false);
-//        try {
-//            if (accessControl.signIn(username.getValue(), password.getValue())) {
-//                getUI().get().navigate("");
-//            } else {
-//                showNotification(new Notification("Login failed."));
-//                campaign.focus();
-//            }
-//        } finally {
-//            login.setEnabled(true);
-//        }
-//    }
 
     private void crowdLogin() {
         crowdLogin.setEnabled(false);
         try {
             if (crowdAccessControl.signIn(crowdUsername.getValue(), crowdPassword.getValue())) {
-                getUI().get().navigate("");
+                getUI().get().navigate("DiscoverCampaigns");
             } else {
                 showNotification(new Notification("Login failed."));
                 campaign.focus();
