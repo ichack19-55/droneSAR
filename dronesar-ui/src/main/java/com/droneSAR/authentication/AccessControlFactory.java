@@ -1,23 +1,12 @@
 package com.droneSAR.authentication;
 
 public class AccessControlFactory {
-    private static final AccessControlFactory INSTANCE = new AccessControlFactory();
-
-    private final AccessControl adminAccessControl = new AdminAccessControl();
-    private final AccessControl crowdAccessControl = new CrowdAccessControl();
+    private static final AccessControl userAccessControl = new UserAccessControl();
 
     private AccessControlFactory() {
     }
 
-    public static AccessControlFactory anAccessControl() {
-        return INSTANCE;
-    }
-
-    public AccessControl forAdmins() {
-        return adminAccessControl;
-    }
-
-    public AccessControl forCrowds() {
-        return crowdAccessControl;
+    public static AccessControl getUAC() {
+        return userAccessControl;
     }
 }

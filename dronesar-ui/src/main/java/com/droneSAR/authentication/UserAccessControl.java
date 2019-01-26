@@ -5,7 +5,7 @@ package com.droneSAR.authentication;
  * accepts any string as a password, and considers the user "admin" as the only
  * administrator.
  */
-public class AdminAccessControl implements AccessControl {
+public class UserAccessControl implements AccessControl {
 
     @Override
     public boolean signIn(String username, String password) {

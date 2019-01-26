@@ -18,8 +18,7 @@ public class DroneSarInitListener implements VaadinServiceInitListener {
 
     @Override
     public void serviceInit(ServiceInitEvent initEvent) {
-        final AccessControl accessControl = AccessControlFactory.anAccessControl()
-                .forAdmins();
+        final AccessControl accessControl = AccessControlFactory.getUAC();
 
         initEvent.getSource().addUIInitListener(uiInitEvent -> {
             uiInitEvent.getUI().addBeforeEnterListener(enterEvent -> {

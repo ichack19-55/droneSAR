@@ -25,22 +25,15 @@ import com.vaadin.flow.router.Route;
 @HtmlImport("css/shared-styles.html")
 public class LoginScreen extends FlexLayout {
 
-    private TextField campaign;
     private TextField username;
     private PasswordField password;
     private Button login;
-    private AccessControl accessControl;
-
-    private TextField crowdUsername;
-    private PasswordField crowdPassword;
-    private Button crowdLogin;
-    private AccessControl crowdAccessControl;
+    private AccessControl userAccessControl;
 
     public LoginScreen() {
-        accessControl = AccessControlFactory.anAccessControl().forAdmins();
-        crowdAccessControl = AccessControlFactory.anAccessControl().forCrowds();
-
+        userAccessControl = AccessControlFactory.getUAC();
         buildUI();
+        username.focus();
     }
 
     private void buildUI() {
@@ -64,29 +57,28 @@ public class LoginScreen extends FlexLayout {
         add(centeringLayout);
     }
 
-
     private Component buildCrowdLoginForm() {
         FormLayout loginForm = new FormLayout();
 
         loginForm.setWidth("310px");
 
-        loginForm.addFormItem(crowdUsername = new TextField(), "Username");
-        crowdUsername.setWidth("15em");
-        crowdUsername.setValue("matt");
+        loginForm.addFormItem(username = new TextField(), "Username");
+        username.setWidth("15em");
+        username.setValue("matt");
 
         loginForm.add(new Html("<br/>"));
 
-        loginForm.addFormItem(crowdPassword = new PasswordField(), "Password");
-        crowdPassword.setWidth("15em");
-        crowdPassword.setValue("iscool");
+        loginForm.addFormItem(password = new PasswordField(), "Password");
+        password.setWidth("15em");
+        password.setValue("iscool");
 
         HorizontalLayout buttons = new HorizontalLayout();
         loginForm.add(new Html("<br/>"));
         loginForm.add(buttons);
 
-        buttons.add(crowdLogin = new Button("Login"));
-        crowdLogin.addClickListener(event -> crowdLogin());
-        crowdLogin.addThemeVariants(ButtonVariant.LUMO_SUCCESS, ButtonVariant.LUMO_PRIMARY);
+        buttons.add(login = new Button("Login"));
+        login.addClickListener(event -> crowdLogin());
+        login.addThemeVariants(ButtonVariant.LUMO_SUCCESS, ButtonVariant.LUMO_PRIMARY);
 
         return loginForm;
     }
@@ -106,16 +98,16 @@ public class LoginScreen extends FlexLayout {
 
 
     private void crowdLogin() {
-        crowdLogin.setEnabled(false);
+        login.setEnabled(false);
         try {
-            if (crowdAccessControl.signIn(crowdUsername.getValue(), crowdPassword.getValue())) {
+            if (userAccessControl.signIn(username.getValue(), password.getValue())) {
                 getUI().get().navigate("DiscoverCampaigns");
             } else {
                 showNotification(new Notification("Login failed."));
-                campaign.focus();
+                username.focus();
             }
         } finally {
-            crowdLogin.setEnabled(true);
+            login.setEnabled(true);
         }
     }
 
