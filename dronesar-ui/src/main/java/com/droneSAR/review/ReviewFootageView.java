@@ -15,7 +15,6 @@ import com.vaadin.flow.server.VaadinServletService;
 import com.vaadin.flow.server.VaadinSession;
 
 import com.droneSAR.MainLayout;
-import javafx.scene.input.KeyCode;
 
 @Route(value = "ReviewFootage", layout = MainLayout.class)
 @PageTitle("Review Footage")

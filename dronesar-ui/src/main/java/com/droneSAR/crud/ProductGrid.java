@@ -30,10 +30,10 @@ public class ProductGrid extends Grid<Product> {
         decimalFormat.setMinimumFractionDigits(2);
 
         // To change the text alignment of the column, a template is used.
-        final String priceTemplate = "<div style='text-align: right'>[[item.price]]</div>";
-        addColumn(TemplateRenderer.<Product>of(priceTemplate)
-                .withProperty("price", product -> decimalFormat.format(product.getPrice()) + " €"))
-                .setHeader("Price")
+        final String pointsTemplate = "<div style='text-align: right'>[[item.price]]</div>";
+        addColumn(TemplateRenderer.<Product>of(pointsTemplate)
+                .withProperty("points", product -> decimalFormat.format(product.getPrice()) + " €"))
+                .setHeader("Points")
                 .setComparator(Comparator.comparing(Product::getPrice))
                 .setFlexGrow(3);
 
@@ -48,11 +48,25 @@ public class ProductGrid extends Grid<Product> {
                 .setComparator(Comparator.comparing(Product::getAvailability))
                 .setFlexGrow(5);
 
+        final String dateAddedTemplate = "<div style='text-align: right'>[[item.stockCount]]</div>";
+        addColumn(TemplateRenderer.<Product>of(dateAddedTemplate)
+                .withProperty("dateAdded", product -> product.getStockCount() == 0 ? "-" : Integer.toString(product.getStockCount())))
+                .setHeader("Date Added")
+                .setComparator(Comparator.comparingInt(Product::getStockCount))
+                .setFlexGrow(3);
+
         // To change the text alignment of the column, a template is used.
-        final String stockCountTemplate = "<div style='text-align: right'>[[item.stockCount]]</div>";
-        addColumn(TemplateRenderer.<Product>of(stockCountTemplate)
-                .withProperty("stockCount", product -> product.getStockCount() == 0 ? "-" : Integer.toString(product.getStockCount())))
-                .setHeader("Stock count")
+        final String activeReviewersTemplate = "<div style='text-align: right'>[[item.stockCount]]</div>";
+        addColumn(TemplateRenderer.<Product>of(activeReviewersTemplate)
+                .withProperty("activeReviewers", product -> product.getStockCount() == 0 ? "-" : Integer.toString(product.getStockCount())))
+                .setHeader("Active Reviewers")
+                .setComparator(Comparator.comparingInt(Product::getStockCount))
+                .setFlexGrow(3);
+
+        final String viewCountTemplate = "<div style='text-align: right'>[[item.stockCount]]</div>";
+        addColumn(TemplateRenderer.<Product>of(viewCountTemplate)
+                .withProperty("progress", product -> product.getStockCount() == 0 ? "-" : Integer.toString(product.getStockCount())))
+                .setHeader("Progress")
                 .setComparator(Comparator.comparingInt(Product::getStockCount))
                 .setFlexGrow(3);
 
