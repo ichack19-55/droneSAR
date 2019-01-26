@@ -64,4 +64,9 @@ public class Store {
   public Map<User, Picture> getUserFootage() {
     return userPicture;
   }
+
+  public void removeHit(Integer hit){
+    hitsUser.remove(hit);
+    hitsPicture.remove(hit);
+  }
 }
