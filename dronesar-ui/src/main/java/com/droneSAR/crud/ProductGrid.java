@@ -20,7 +20,7 @@ public class ProductGrid extends Grid<Product> {
         setSizeFull();
 
         addColumn(Product::getProductName)
-                .setHeader("Product name")
+                .setHeader("Campaign name")
                 .setFlexGrow(20)
                 .setSortable(true);
 

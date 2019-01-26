@@ -27,7 +27,7 @@ import com.droneSAR.backend.data.Product;
 public class SampleCrudView extends HorizontalLayout
         implements HasUrlParameter<String> {
 
-    public static final String VIEW_NAME = "Inventory";
+    public static final String VIEW_NAME = "Campaigns";
     private ProductGrid grid;
     private ProductForm form;
     private TextField filter;
@@ -69,15 +69,15 @@ public class SampleCrudView extends HorizontalLayout
         // Apply the filter to grid's data provider. TextField value is never null
         filter.addValueChangeListener(event -> dataProvider.setFilter(event.getValue()));
 
-        newProduct = new Button("New product");
-        newProduct.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
-        newProduct.setIcon(VaadinIcon.PLUS_CIRCLE.create());
-        newProduct.addClickListener(click -> viewLogic.newProduct());
+//        newProduct = new Button("New product");
+//        newProduct.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
+//        newProduct.setIcon(VaadinIcon.PLUS_CIRCLE.create());
+//        newProduct.addClickListener(click -> viewLogic.newProduct());
 
         HorizontalLayout topLayout = new HorizontalLayout();
         topLayout.setWidth("100%");
         topLayout.add(filter);
-        topLayout.add(newProduct);
+        //topLayout.add(newProduct);
         topLayout.setVerticalComponentAlignment(Alignment.START, filter);
         topLayout.expand(filter);
         return topLayout;
@@ -91,9 +91,9 @@ public class SampleCrudView extends HorizontalLayout
         Notification.show(msg);
     }
 
-    public void setNewProductEnabled(boolean enabled) {
-        newProduct.setEnabled(enabled);
-    }
+//    public void setNewProductEnabled(boolean enabled) {
+//        newProduct.setEnabled(enabled);
+//    }
 
     public void clearSelection() {
         grid.getSelectionModel().deselectAll();

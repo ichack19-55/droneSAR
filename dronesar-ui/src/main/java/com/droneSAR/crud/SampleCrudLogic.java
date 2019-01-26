@@ -30,7 +30,7 @@ public class SampleCrudLogic implements Serializable {
         // Hide and disable if not admin
         if (!AccessControlFactory.anAccessControl().forAdmins()
                 .isUserInRole(AccessControl.ADMIN_ROLE_NAME)) {
-            view.setNewProductEnabled(false);
+            //view.setNewProductEnabled(false);
         }
     }
 
