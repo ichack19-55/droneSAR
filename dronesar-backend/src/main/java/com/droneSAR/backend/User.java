@@ -2,6 +2,7 @@ package com.droneSAR.backend;
 
 import java.util.HashMap;
 import java.util.LinkedHashMap;
+import java.util.Set;
 
 public class User {
 
@@ -15,6 +16,10 @@ public class User {
 
     public void subscribeTo(Campaign campaign){
         this.subscribedCampaigns.put(campaign.getCampaignId(), campaign);
+    }
+
+    public Set<Integer> getSubscribedCampaignIds() {
+        return this.subscribedCampaigns.keySet();
     }
 
     public int getUserId() {
