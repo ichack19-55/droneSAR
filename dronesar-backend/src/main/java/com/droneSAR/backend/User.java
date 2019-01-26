@@ -1,5 +1,5 @@
 package com.droneSAR.backend;
 
-public interface Viewer {
+public class User {
 
 }
