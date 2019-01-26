@@ -1,29 +1,13 @@
 package com.droneSAR.myCampaigns;
-import com.droneSAR.backend.data.Availability;
-import com.droneSAR.backend.data.Category;
-import com.droneSAR.backend.data.Product;
 
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;
-import com.vaadin.flow.component.checkbox.CheckboxGroup;
-import com.vaadin.flow.component.checkbox.CheckboxGroupVariant;
-import com.vaadin.flow.component.combobox.ComboBox;
 import com.vaadin.flow.component.html.Div;
-import com.vaadin.flow.component.html.Label;
-import com.vaadin.flow.component.html.Span;
-import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.textfield.TextField;
-import com.vaadin.flow.component.textfield.TextFieldVariant;
 import com.vaadin.flow.component.upload.Receiver;
-import com.vaadin.flow.component.upload.receivers.FileBuffer;
-import com.vaadin.flow.data.binder.BeanValidationBinder;
-import com.vaadin.flow.data.binder.Binder;
-import com.vaadin.flow.data.converter.StringToBigDecimalConverter;
-import com.vaadin.flow.data.converter.StringToIntegerConverter;
 import com.vaadin.flow.data.value.ValueChangeMode;
 import com.vaadin.flow.component.upload.Upload;
-import com.vaadin.flow.component.Component;
 
 import com.vaadin.flow.component.upload.receivers.MultiFileMemoryBuffer;
 
@@ -35,20 +19,13 @@ public class CampaignForm extends Div {
     private TextField price;
     private TextField stockCount;
     private Upload upload;
-    private ComboBox<Availability> availability;
-    private CheckboxGroup<Category> category;
     private Button save;
     private Button cancel;
     private Button delete;
     private MyCampaigns MyCamp;
     private Receiver receiver;
 
-
-    private Binder<Product> binder;
-    private Product currentProduct;
-
-    public CampaignForm(MyCampaigns mycamp){
-
+    public CampaignForm(MyCampaigns mycamp) {
         MyCamp = mycamp;
         setClassName("product-form");
         content = new VerticalLayout();

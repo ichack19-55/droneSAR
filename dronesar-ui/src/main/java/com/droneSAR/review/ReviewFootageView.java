@@ -1,6 +1,5 @@
 package com.droneSAR.review;
 
-import com.droneSAR.crud.ProductGrid;
 import com.vaadin.flow.component.html.Image;
 import com.vaadin.flow.component.html.Span;
 import com.vaadin.flow.component.icon.VaadinIcon;
@@ -17,8 +16,8 @@ import com.vaadin.flow.server.VaadinSession;
 import com.droneSAR.MainLayout;
 
 @Route(value = "ReviewFootage", layout = MainLayout.class)
-@PageTitle("Review Footage")
-public class ReviewFootageView extends HorizontalLayout {
+@PageTitle("Review Footage") public class ReviewFootageView
+    extends HorizontalLayout {
 
     public static final String VIEW_NAME = "Review Footage";
     private TextField filter;
@@ -26,14 +25,13 @@ public class ReviewFootageView extends HorizontalLayout {
     private Button nextImage;
     private Button flagImage;
     private String campaignName;
-    private ProductGrid grid;
     private Image img;
 
     public ReviewFootageView() {
         campaignName = "Placeholder Campaign Name";
         setSizeFull();
         HorizontalLayout topLayout = createTopBar();
-        LoadStaticImage(null);
+        loadStaticImage(null);
         VerticalLayout barAndImages = new VerticalLayout();
         barAndImages.add(topLayout);
         barAndImages.add(img);
@@ -43,17 +41,17 @@ public class ReviewFootageView extends HorizontalLayout {
         add(barAndImages);
     }
 
-    public void LoadStaticImage(String filepath){
-        if(filepath== null) {
-            String resolvedImage = VaadinServletService.getCurrent()
-                    .resolveResource("frontend://img/Placeholder.png",
-                            VaadinSession.getCurrent().getBrowser());
+    public void loadStaticImage(String filepath) {
+        if (filepath == null) {
+            filepath = VaadinServletService.getCurrent()
+                .resolveResource("frontend://img/Placeholder.png",
+                    VaadinSession.getCurrent().getBrowser());
         }
         img = new Image(filepath, "");
         img.setWidth("100%");
     }
 
-    public HorizontalLayout createTopBar(){
+    public HorizontalLayout createTopBar() {
 
         // Apply the filter to grid's data provider. TextField value is never null
         //filter.addValueChangeListener(event -> dataProvider.setFilter(event.getValue()));
