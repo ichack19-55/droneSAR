@@ -4,7 +4,7 @@ package com.droneSAR.backend;
 public class User {
 
     private final int userId;
-    private Footage footage;
+    private Picture footage;
 
     public User(int userId) {
         this.userId = userId;
@@ -14,7 +14,7 @@ public class User {
         return this.userId;
     }
 
-    public void viewFootage() {
+    public void viewPicture() {
         Store.getInstance().putUserFootage(this, footage);
         // TODO:
     }
@@ -30,7 +30,7 @@ public class User {
     public void requestNewFootage() {
         // TODO:
     }
-!
+
     public void flagFootage() {
         Store.getInstance().putHits(Store.getInstance().getTotalHitCount(), footage, this);
 

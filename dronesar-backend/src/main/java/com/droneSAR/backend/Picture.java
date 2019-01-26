@@ -1,5 +1,5 @@
 package com.droneSAR.backend;
 
-public class Footage {
+public class Picture {
 
 }

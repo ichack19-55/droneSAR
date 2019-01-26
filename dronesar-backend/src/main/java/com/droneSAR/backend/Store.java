@@ -8,14 +8,14 @@ public class Store {
   //store: hits - user, hits - footage, user - footage
   private static Store store;
   private Map<Integer, User> hitsUser;
-  private Map<Integer, Footage> hitsFootage;
-  private Map<User, Footage> userFootage;
+  private Map<Integer, Picture> hitsPicture;
+  private Map<User, Picture> userPicture;
   private Integer totalHitCount;
 
   private Store(){
     hitsUser = new HashMap<>();
-    hitsFootage = new HashMap<>();
-    userFootage = new HashMap<>();
+    hitsPicture = new HashMap<>();
+    userPicture = new HashMap<>();
     totalHitCount = 0;
   }
 
@@ -35,33 +35,33 @@ public class Store {
   }
 
 
-  public Footage getFootageFromHit(Integer hit){
-    return hitsFootage.get(hit);
+  public Picture getFootageFromHit(Integer hit){
+    return hitsPicture.get(hit);
   }
 
-  public void putHits(Integer hit, Footage footage, User user){
-    hitsFootage.put(hit, footage);
+  public void putHits(Integer hit, Picture footage, User user){
+    hitsPicture.put(hit, footage);
     hitsUser.put(hit, user);
-    totalHitCount++;
+    totalHitCount ++;
   }
 
-  public Footage getFootageFromUser(User user){
-    return userFootage.get(user);
+  public Picture getFootageFromUser(User user){
+    return userPicture.get(user);
   }
 
-  public void putUserFootage(User user, Footage footage){
-    userFootage.put(user, footage);
+  public void putUserFootage(User user, Picture footage){
+    userPicture.put(user, footage);
   }
 
   public Map<Integer, User> getHitsUser(){
     return hitsUser;
   }
 
-  public Map<Integer, Footage> getHitsFootage() {
-    return hitsFootage;
+  public Map<Integer, Picture> getHitsFootage() {
+    return hitsPicture;
   }
 
-  public Map<User, Footage> getUserFootage() {
-    return userFootage;
+  public Map<User, Picture> getUserFootage() {
+    return userPicture;
   }
 }
