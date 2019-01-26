@@ -32,9 +32,6 @@ public class User {
         // TODO:
     }
     */
-    public void requestNewPicture() {
-        this.picture = Store.getInstance().
-    }
 
     public void flagFootage() {
         Store.getInstance().putHits(Store.getInstance().getTotalHitCount(), picture, this);
