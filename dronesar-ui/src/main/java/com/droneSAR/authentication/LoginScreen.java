@@ -5,7 +5,6 @@ import com.vaadin.flow.component.Html;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;
 import com.vaadin.flow.component.dependency.HtmlImport;
-import com.vaadin.flow.component.dependency.StyleSheet;
 import com.vaadin.flow.component.formlayout.FormLayout;
 import com.vaadin.flow.component.html.H1;
 import com.vaadin.flow.component.html.Span;
@@ -38,8 +37,8 @@ public class LoginScreen extends FlexLayout {
     private AccessControl crowdAccessControl;
 
     public LoginScreen() {
-        accessControl = AccessControlFactory.getInstance().createAccessControl();
-        crowdAccessControl = AccessControlFactory.getInstance().createAccessControl(); // TODO
+        accessControl = AccessControlFactory.anAccessControl().forAdmins();
+        crowdAccessControl = AccessControlFactory.anAccessControl().forCrowds();
 
         buildUI();
         campaign.focus();

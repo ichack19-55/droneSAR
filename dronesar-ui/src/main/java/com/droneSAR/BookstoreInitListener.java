@@ -15,8 +15,8 @@ import com.droneSAR.authentication.LoginScreen;
 public class BookstoreInitListener implements VaadinServiceInitListener {
     @Override
     public void serviceInit(ServiceInitEvent initEvent) {
-        final AccessControl accessControl = AccessControlFactory.getInstance()
-                .createAccessControl();
+        final AccessControl accessControl = AccessControlFactory.anAccessControl()
+                .forAdmins();
 
         initEvent.getSource().addUIInitListener(uiInitEvent -> {
             uiInitEvent.getUI().addBeforeEnterListener(enterEvent -> {
