@@ -5,7 +5,7 @@ import java.util.Map;
 
 public class Store {
 
-  //store: hits - user, hits - footage, user - footage
+  // store: hits - user, hits - footage, user - footage
   private static Store store;
   private Map<Integer, User> hitsUser;
   private Map<Integer, Picture> hitsPicture;
