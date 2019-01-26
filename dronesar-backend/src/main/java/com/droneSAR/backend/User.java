@@ -32,7 +32,7 @@ public class User {
     }
 
     public void flagFootage() {
-        Store.getInstance().putHits(Store.getInstance().hitCount, footage, this);
+        Store.getInstance().putHits(Store.getInstance().hitId, footage, this);
 
     }
 

@@ -1,14 +1,16 @@
 package com.droneSAR.backend;
 
+import java.io.File;
+
 public class Drone {
 
-  //TODO: input footage file
+  private final File video;
 
-  public Drone(/*input file*/){
-    // intialise
+  public Drone(File video){
+      this.video = video;
   }
 
-  private void toFootage(/*input file*/){
+  private void splitFootageIntoSegments(/*input file*/){
     // getFootage(/*input file*/) - function in Footage to return list of small footages from input.
     // then add to store
   }

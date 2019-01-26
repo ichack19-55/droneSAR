@@ -10,13 +10,13 @@ public class Store {
   Map<Integer, User> hitsUser;
   Map<Integer, Footage> hitsFootage;
   Map<User, Footage> userFootage;
-  Integer hitCount;
+  Integer hitId;
 
   private Store(){
     hitsUser = new HashMap<>();
     hitsFootage = new HashMap<>();
     userFootage = new HashMap<>();
-    hitCount = 0;
+    hitId = 0;
   }
 
   public static Store getInstance() {
@@ -38,7 +38,7 @@ public class Store {
   public void putHits(Integer hit, Footage footage, User user){
     hitsFootage.put(hit, footage);
     hitsUser.put(hit, user);
-    hitCount++;
+    hitId++;
   }
 
   public Footage getFootageFromUser(User user){
