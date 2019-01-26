@@ -5,7 +5,7 @@ import java.util.LinkedHashMap;
 
 public class CampaignStore {
 
-  // Singleton pattern store for Campagins
+  // Singleton pattern store for Campaigns
 
   private static CampaignStore store;
   private static HashMap<Integer, Campaign>  campaignStore;
