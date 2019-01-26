@@ -10,4 +10,5 @@ public class Data {
         this.picture = picture;
         this.gps = gps;
     }
+
 }
