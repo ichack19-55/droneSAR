@@ -4,7 +4,6 @@ import java.util.Locale;
 import java.util.Objects;
 
 import com.vaadin.flow.data.provider.ListDataProvider;
-import com.droneSAR.backend.DataService;
 import com.droneSAR.backend.data.Product;
 
 public class ProductDataProvider extends ListDataProvider<Product> {

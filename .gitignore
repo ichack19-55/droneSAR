@@ -3,6 +3,7 @@
 
 # Intellij and build files
 .idea
+*.iml
 target/
 
 # Log file
