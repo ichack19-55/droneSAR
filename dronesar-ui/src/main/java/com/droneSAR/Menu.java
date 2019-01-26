@@ -43,12 +43,12 @@ public class Menu extends FlexLayout {
         top.setDefaultVerticalComponentAlignment(Alignment.CENTER);
         top.setClassName("menu-header");
 
-        Label title = new Label("My CRUD");
+        Label title = new Label("DroneSAR");
 
         // Note! Image resource url is resolved here as it is dependent on the
         // execution mode (development or production) and browser ES level support
         String resolvedImage = VaadinServletService.getCurrent()
-                .resolveResource("frontend://img/table-logo.png",
+                .resolveResource("frontend://img/drone_small.jpeg",
                         VaadinSession.getCurrent().getBrowser());
 
         Image image = new Image(resolvedImage, "");

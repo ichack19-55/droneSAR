@@ -97,7 +97,7 @@ public class ProductForm extends Div {
 
         viewLogic = sampleCrudLogic;
 
-        productName = new TextField("Product name");
+        productName = new TextField("Campaign Name");
         productName.setWidth("100%");
         productName.setRequired(true);
         productName.setValueChangeMode(ValueChangeMode.EAGER);

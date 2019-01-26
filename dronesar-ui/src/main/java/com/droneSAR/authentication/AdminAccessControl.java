@@ -5,12 +5,15 @@ package com.droneSAR.authentication;
  * accepts any string as a password, and considers the user "admin" as the only
  * administrator.
  */
-public class BasicAccessControl implements AccessControl {
+public class AdminAccessControl implements AccessControl {
 
     @Override
     public boolean signIn(String username, String password) {
-        if (username == null || username.isEmpty())
+        if (username == null || username.isEmpty()) {
             return false;
+        }
+
+        // TODO: lookup campaign, then lookup credentials.
 
         CurrentUser.set(username);
         return true;
@@ -21,6 +24,7 @@ public class BasicAccessControl implements AccessControl {
         return !CurrentUser.get().isEmpty();
     }
 
+    // TODO: review this
     @Override
     public boolean isUserInRole(String role) {
         if ("admin".equals(role)) {
