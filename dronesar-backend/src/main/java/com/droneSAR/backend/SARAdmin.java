@@ -6,6 +6,9 @@ public class SARAdmin extends User {
         super(userId);
     }
 
-    public void 
+    public void markHitAsDone(Integer hit){
+        Store.getInstance().removeHit(hit);
+    }
+
 
 }
