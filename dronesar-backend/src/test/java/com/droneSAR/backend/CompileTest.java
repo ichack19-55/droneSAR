@@ -9,7 +9,7 @@ public class CompileTest {
 
     @Test
     public void testCampaignCompiles() {
-        Campaign c = new Campaign();
+        Campaign c = new Campaign("test");
     }
 
     @Test

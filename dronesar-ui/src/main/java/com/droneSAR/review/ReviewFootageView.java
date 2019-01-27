@@ -1,5 +1,6 @@
 package com.droneSAR.review;
 
+import com.droneSAR.authentication.CurrentUser;
 import com.vaadin.flow.component.html.Image;
 import com.vaadin.flow.component.html.Span;
 import com.vaadin.flow.component.icon.VaadinIcon;
@@ -27,6 +28,10 @@ public class ReviewFootageView extends HorizontalLayout {
     private Image img;
 
     public ReviewFootageView() {
+        buildUI();
+    }
+
+    private void buildUI() {
         campaignName = "Placeholder Campaign Name";
         setSizeFull();
 
@@ -72,6 +77,10 @@ public class ReviewFootageView extends HorizontalLayout {
         topLayout.add(campaign);
         topLayout.setAlignSelf(Alignment.CENTER, campaign);
 
+//        topLayout.getElement().addEventListener("keypress", event -> left()).setFilter("event.key == 'Left'");
+//        topLayout.getElement().addEventListener("keypress", event -> right()).setFilter("event.key == 'Right'");
+//        topLayout.getElement().addEventListener("keypress", event -> flag()).setFilter("event.key == 'Space'");
+
         return topLayout;
     }
 
@@ -79,23 +88,20 @@ public class ReviewFootageView extends HorizontalLayout {
         lastImage = new Button("Last Image");
         lastImage.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
         lastImage.setIcon(VaadinIcon.ANGLE_LEFT.create());
-        //TODO: Link to logic to load last image
-        //lastImage.addClickListener(click -> viewLogic.newProduct());
+        lastImage.addClickListener(click -> left());
 
         nextImage = new Button("Next Image");
         nextImage.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
         nextImage.setIcon(VaadinIcon.ANGLE_RIGHT.create());
         nextImage.setIconAfterText(true);
-        //TODO: Link to logic to load next image
-        //nextImage.addClickListener(click -> viewLogic.newProduct());
+        nextImage.addClickListener(click -> right());
 
         flagImage = new Button("Flag");
         flagImage.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
         flagImage.setIcon(VaadinIcon.FLAG.create());
         flagImage.setIconAfterText(true);
         flagImage.getStyle().set("margin-left", "auto");
-        //TODO: Link to logic to flagged image logic
-        //flagImage.addClickListener(click -> viewLogic.newProduct());
+        flagImage.addClickListener(click -> flag());
 
         HorizontalLayout btmLayout = new HorizontalLayout();
         btmLayout.setWidth("100%");
@@ -105,5 +111,17 @@ public class ReviewFootageView extends HorizontalLayout {
         btmLayout.add(flagImage);
 
         return btmLayout;
+    }
+
+    private void left() {
+        System.out.println("Go left");
+    }
+
+    private void right() {
+        System.out.println("Go right");
+    }
+
+    private void flag() {
+        System.out.println("Flag");
     }
 }

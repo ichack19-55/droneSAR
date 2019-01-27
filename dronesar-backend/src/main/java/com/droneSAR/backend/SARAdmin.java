@@ -16,7 +16,7 @@ public class SARAdmin extends User {
     public void createCampaign(){
         // Can only create one campaign:
         if (!this.hasCampaignBeenCreated()) {
-            this.campaign = new Campaign();
+            this.campaign = new Campaign(createdCampaignId + "");
             CampaignStore.getInstance().addCampaign(campaign);
         } else {
             // Campaign already created!

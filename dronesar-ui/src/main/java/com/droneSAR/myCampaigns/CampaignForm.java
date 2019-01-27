@@ -95,5 +95,4 @@ public class CampaignForm extends Div {
         campaign.addDroneClip(new DroneClip(droneVideo, ReviewPriority.HIGH));
         CampaignStore.getInstance().addCampaign(campaign);
     }
-
 }
