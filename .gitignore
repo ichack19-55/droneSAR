@@ -3,6 +3,7 @@
 
 # macOS
 *.DS_Store
+*.mp4
 
 # Intellij and build files
 .idea

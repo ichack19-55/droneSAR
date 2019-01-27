@@ -42,7 +42,6 @@ public class CampaignForm extends Div {
 
 
         buffer = new MemoryBuffer();
-        buffer.receiveUpload("out", ".mp4");
         upload = new Upload(buffer);
         upload.setAcceptedFileTypes("video/mp4");
 
