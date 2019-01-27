@@ -1,6 +1,9 @@
 # Compiled class file
 *.class
 
+# macOS
+.DS_Store
+
 # Intellij and build files
 .idea
 *.iml
