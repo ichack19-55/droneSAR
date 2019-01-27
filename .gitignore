@@ -2,7 +2,7 @@
 *.class
 
 # macOS
-.DS_Store
+*.DS_Store
 
 # Intellij and build files
 .idea
