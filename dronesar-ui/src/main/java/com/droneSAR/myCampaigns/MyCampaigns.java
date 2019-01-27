@@ -1,12 +1,16 @@
 package com.droneSAR.myCampaigns;
 
 import com.droneSAR.MainLayout;
+import com.droneSAR.backend.Campaign;
+import com.droneSAR.backend.CampaignStore;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;
 import com.vaadin.flow.component.icon.VaadinIcon;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.textfield.TextField;
+import com.vaadin.flow.component.grid.Grid;
+import com.vaadin.flow.data.renderer.NativeButtonRenderer;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 
@@ -21,6 +25,8 @@ public class MyCampaigns extends HorizontalLayout {
     private CampaignForm form;
     private Button newCampaign;
 
+    private Grid<Campaign> grid;
+
 
     public MyCampaigns() {
         setSizeFull();
@@ -28,9 +34,20 @@ public class MyCampaigns extends HorizontalLayout {
         showForm(false);
         HorizontalLayout topLayout = createTopBar();
         VerticalLayout barAndGridLayout = new VerticalLayout();
+
+        grid = new Grid<>();
+        grid.setItems(CampaignStore.getInstance().getCampaignStore());
+        grid.addColumn(Campaign::getName).setHeader("Campaign Name");
+        grid.addColumn(Campaign::getCampaignId).setHeader("Campaign ID");
+        grid.addColumn(Campaign::getCrowdReviewers).setHeader("Reviewers");
+        grid.addColumn(new NativeButtonRenderer<Campaign>("Review footage", item -> goToReview()));
+
         barAndGridLayout.add(topLayout);
+        barAndGridLayout.add(grid);
+        barAndGridLayout.setFlexGrow(1, grid);
         barAndGridLayout.setFlexGrow(0, topLayout);
         barAndGridLayout.setSizeFull();
+        barAndGridLayout.expand(grid);
         add(barAndGridLayout);
         add(form);
     }
@@ -62,5 +79,9 @@ public class MyCampaigns extends HorizontalLayout {
 
     public void showForm(boolean show){
         form.setVisible(show);
+    }
+
+    public void goToReview(){
+
     }
 }
