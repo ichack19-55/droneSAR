@@ -28,6 +28,7 @@ public class LoginScreen extends FlexLayout {
     private TextField username;
     private PasswordField password;
     private Button login;
+    private Button signup;
     private AccessControl userAccessControl;
 
     public LoginScreen() {
@@ -76,8 +77,12 @@ public class LoginScreen extends FlexLayout {
         loginForm.add(new Html("<br/>"));
         loginForm.add(buttons);
 
+        buttons.add(signup = new Button("Sign Up"));
+        signup.addClickListener(event -> signup());
+        signup.addThemeVariants(ButtonVariant.LUMO_SUCCESS, ButtonVariant.LUMO_PRIMARY);
+
         buttons.add(login = new Button("Login"));
-        login.addClickListener(event -> crowdLogin());
+        login.addClickListener(event -> login());
         login.addThemeVariants(ButtonVariant.LUMO_SUCCESS, ButtonVariant.LUMO_PRIMARY);
 
         return loginForm;
@@ -96,8 +101,21 @@ public class LoginScreen extends FlexLayout {
         return loginInformation;
     }
 
+    private void signup() {
+        signup.setEnabled(false);
+        try {
+            if (userAccessControl.createUser(username.getValue(), password.getValue())) {
+                login();
+            } else {
+                showNotification(new Notification("Username already exists."));
+                username.focus();
+            }
+        } finally {
+            signup.setEnabled(true);
+        }
+    }
 
-    private void crowdLogin() {
+    private void login() {
         login.setEnabled(false);
         try {
             if (userAccessControl.signIn(username.getValue(), password.getValue())) {

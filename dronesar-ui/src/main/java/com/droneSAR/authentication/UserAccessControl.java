@@ -58,8 +58,8 @@ public class UserAccessControl implements AccessControl {
             return false;
         }
 
-        try (BufferedWriter br = new BufferedWriter(new FileWriter(UAC_CSV_FILENAME))) {
-            br.write(username + CSV_DELIMITER + fakeHashLol(password));
+        try (BufferedWriter br = new BufferedWriter(new FileWriter(UAC_CSV_FILENAME, true))) {
+            br.write(username + CSV_DELIMITER + fakeHashLol(password) + "\n");
         } catch (IOException e) {
             e.printStackTrace();
         }
