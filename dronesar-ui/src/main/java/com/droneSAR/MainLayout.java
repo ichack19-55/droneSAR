@@ -1,6 +1,7 @@
 package com.droneSAR;
 
 import com.droneSAR.discover.DiscoverCampaigns;
+import com.droneSAR.myCampaigns.CampaignManager;
 import com.droneSAR.myCampaigns.MyCampaigns;
 import com.vaadin.flow.component.dependency.HtmlImport;
 import com.vaadin.flow.component.icon.VaadinIcon;
@@ -26,6 +27,7 @@ public class MainLayout extends FlexLayout implements RouterLayout {
 
         menu = new Menu();
         menu.addView(MyCampaigns.class, MyCampaigns.VIEW_NAME, VaadinIcon.USER.create());
+        menu.addView(CampaignManager.class, "Manage", VaadinIcon.USER.create());
         //menu.addView(ReviewFootageView.class, ReviewFootageView.VIEW_NAME, VaadinIcon.FILM.create());
         add(menu);
     }
