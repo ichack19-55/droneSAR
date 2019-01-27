@@ -1,33 +1,30 @@
 package com.droneSAR.myCampaigns;
 
+import com.droneSAR.backend.Campaign;
+import com.droneSAR.backend.CampaignStore;
+import com.droneSAR.backend.DroneClip;
+import com.droneSAR.backend.ReviewPriority;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;
 import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.textfield.TextField;
-import com.vaadin.flow.component.upload.Receiver;
 import com.vaadin.flow.data.value.ValueChangeMode;
 import com.vaadin.flow.component.upload.Upload;
-
 import com.vaadin.flow.component.upload.receivers.MemoryBuffer;
-import com.vaadin.flow.component.upload.receivers.FileData;
-
-
 import java.io.*;
 
-
 public class CampaignForm extends Div {
-    private VerticalLayout content;
 
-    private TextField productName;
-    private TextField price;
-    private TextField stockCount;
+    private static final String VIDEO_FP_PREFIX = "src/main/webapp/videos/";
+
+    private VerticalLayout content;
+    private TextField campaignName;
     private Upload upload;
     private Button save;
     private Button cancel;
     private Button delete;
     private MyCampaigns MyCamp;
-    private Receiver receiver;
     private MemoryBuffer buffer;
 
     public CampaignForm(MyCampaigns mycamp) {
@@ -37,11 +34,11 @@ public class CampaignForm extends Div {
         content.setSizeUndefined();
         add(content);
 
-        productName = new TextField("Campaign Name");
-        productName.setWidth("100%");
-        productName.setRequired(true);
-        productName.setValueChangeMode(ValueChangeMode.EAGER);
-        content.add(productName);
+        campaignName = new TextField("Campaign Name");
+        campaignName.setWidth("100%");
+        campaignName.setRequired(true);
+        campaignName.setValueChangeMode(ValueChangeMode.EAGER);
+        content.add(campaignName);
 
 
         buffer = new MemoryBuffer();
@@ -80,19 +77,23 @@ public class CampaignForm extends Div {
         content.add(save, delete, cancel);
     }
 
-    public void saveData(){
+    private void saveData() {
         try {
             InputStream stream = buffer.getInputStream();
             byte[] bufferByte = new byte[stream.available()];
             stream.read(bufferByte);
-            File targetFile = new File("src/main/webapp/videos/" + productName.getValue() + ".mp4");
+            File targetFile = new File(VIDEO_FP_PREFIX + campaignName.getValue() + "_initial.mp4");
             OutputStream outStream = new FileOutputStream(targetFile);
             outStream.write(bufferByte);
-        }
-        catch(IOException e){
+        } catch (IOException e) {
             e.printStackTrace();
         }
 
+        // Add to backend model
+        Campaign campaign = new Campaign(campaignName.getValue());
+        File droneVideo = new File(VIDEO_FP_PREFIX + campaignName.getValue() + "_initial.mp4");
+        campaign.addDroneClip(new DroneClip(droneVideo, ReviewPriority.HIGH));
+        CampaignStore.getInstance().addCampaign(campaign);
     }
 
 }

@@ -7,7 +7,6 @@ import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
-import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 import com.vaadin.flow.server.VaadinServletService;
@@ -16,11 +15,11 @@ import com.vaadin.flow.server.VaadinSession;
 import com.droneSAR.MainLayout;
 
 @Route(value = "ReviewFootage", layout = MainLayout.class)
-@PageTitle("Review Footage") public class ReviewFootageView
-    extends HorizontalLayout {
+@PageTitle("Review Footage")
+public class ReviewFootageView extends HorizontalLayout {
 
     public static final String VIEW_NAME = "Review Footage";
-    private TextField filter;
+
     private Button lastImage;
     private Button nextImage;
     private Button flagImage;
@@ -30,32 +29,53 @@ import com.droneSAR.MainLayout;
     public ReviewFootageView() {
         campaignName = "Placeholder Campaign Name";
         setSizeFull();
-        HorizontalLayout topLayout = createTopBar();
+
+        HorizontalLayout topBar = createTopBar();
+        HorizontalLayout btmBar = createBtmBar();
+
+        // TODO: should load clip clicked on
         loadStaticImage(null);
+
         VerticalLayout barAndImages = new VerticalLayout();
-        barAndImages.add(topLayout);
+        barAndImages.add(topBar);
         barAndImages.add(img);
+        barAndImages.setAlignSelf(Alignment.CENTER, img);
+        barAndImages.add(btmBar);
+
         barAndImages.setFlexGrow(1, img);
-        barAndImages.setFlexGrow(0, topLayout);
+        barAndImages.setFlexGrow(0, topBar);
         barAndImages.setSizeFull();
+
         add(barAndImages);
     }
 
-    public void loadStaticImage(String filepath) {
+    private void loadStaticImage(String filepath) {
         if (filepath == null) {
             filepath = VaadinServletService.getCurrent()
                 .resolveResource("frontend://img/Placeholder.png",
                     VaadinSession.getCurrent().getBrowser());
         }
+
         img = new Image(filepath, "");
-        img.setWidth("100%");
+        img.setHeight("60%");
     }
 
-    public HorizontalLayout createTopBar() {
+    private HorizontalLayout createTopBar() {
+        Span campaign = new Span(campaignName);
+        campaign.getStyle().set("margin-left", "auto");
+        campaign.getStyle().set("margin-right", "auto");
+        campaign.getStyle().set("font-size", "30px");
 
-        // Apply the filter to grid's data provider. TextField value is never null
-        //filter.addValueChangeListener(event -> dataProvider.setFilter(event.getValue()));
+        HorizontalLayout topLayout = new HorizontalLayout();
+        topLayout.setWidth("100%");
 
+        topLayout.add(campaign);
+        topLayout.setAlignSelf(Alignment.CENTER, campaign);
+
+        return topLayout;
+    }
+
+    private HorizontalLayout createBtmBar() {
         lastImage = new Button("Last Image");
         lastImage.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
         lastImage.setIcon(VaadinIcon.ANGLE_LEFT.create());
@@ -77,21 +97,13 @@ import com.droneSAR.MainLayout;
         //TODO: Link to logic to flagged image logic
         //flagImage.addClickListener(click -> viewLogic.newProduct());
 
-        Span campaign = new Span(campaignName);
-        campaign.getStyle().set("margin-left", "auto");
-        campaign.getStyle().set("margin-right", "auto");
-        campaign.getStyle().set("font-size", "30px");
+        HorizontalLayout btmLayout = new HorizontalLayout();
+        btmLayout.setWidth("100%");
 
-        HorizontalLayout topLayout = new HorizontalLayout();
-        topLayout.setWidth("100%");
-        topLayout.add(lastImage);
-        topLayout.add(nextImage);
-        topLayout.add(campaign);
-        topLayout.setAlignSelf(Alignment.CENTER, campaign);
-        topLayout.add(flagImage);
+        btmLayout.add(lastImage);
+        btmLayout.add(nextImage);
+        btmLayout.add(flagImage);
 
-
-        return topLayout;
+        return btmLayout;
     }
-
 }
