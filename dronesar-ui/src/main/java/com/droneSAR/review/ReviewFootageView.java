@@ -4,6 +4,7 @@ import com.droneSAR.MainLayout;
 import com.droneSAR.backend.ClipBeingReviewed;
 import com.droneSAR.backend.DroneClip;
 import com.droneSAR.backend.User;
+import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.html.Image;
 import com.vaadin.flow.component.html.Span;
 import com.vaadin.flow.component.icon.VaadinIcon;
@@ -29,21 +30,8 @@ public class ReviewFootageView extends HorizontalLayout {
         clip = ClipBeingReviewed.getInstance().getDroneClip();
         name = ClipBeingReviewed.getInstance().getCampaignName();
 
+        loadStaticImage(null);
         buildUI();
-    }
-
-    // Call into this before loading the page
-    private void setClipToReview(DroneClip clip) {
-        if (clip == null) {
-            System.out.println("No clip provided!");
-            return;
-        }
-
-        this.clip = clip;
-        String filename = clip.getNextFrameToReviewFile();
-        if (filename != null) {
-            loadStaticImage(filename);
-        }
     }
 
     private void buildUI() {
@@ -51,9 +39,6 @@ public class ReviewFootageView extends HorizontalLayout {
 
         HorizontalLayout topBar = createTopBar();
         HorizontalLayout btmBar = createBtmBar();
-
-        // TODO: should load clip clicked on
-        loadStaticImage(null);
 
         VerticalLayout barAndImages = new VerticalLayout();
         barAndImages.add(topBar);
@@ -74,9 +59,19 @@ public class ReviewFootageView extends HorizontalLayout {
                 .resolveResource("frontend://img/Placeholder.png",
                     VaadinSession.getCurrent().getBrowser());
         }
-
         img = new Image(filepath, "");
         img.setHeight("60%");
+    }
+
+    // Call into this before loading the page
+    private void setClipToReview(DroneClip clip) {
+        if (clip == null) {
+            System.out.println("No clip provided!");
+            return;
+        }
+
+        this.clip = clip;
+        loadStaticImage(clip.getNextFrameToReviewFile());
     }
 
     private HorizontalLayout createTopBar() {
