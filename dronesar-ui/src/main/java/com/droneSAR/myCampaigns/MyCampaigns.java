@@ -3,6 +3,7 @@ package com.droneSAR.myCampaigns;
 import com.droneSAR.MainLayout;
 import com.droneSAR.backend.Campaign;
 import com.droneSAR.backend.CampaignStore;
+import com.droneSAR.backend.ClipBeingReviewed;
 import com.droneSAR.review.ReviewFootageView;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;
@@ -25,10 +26,7 @@ public class MyCampaigns extends HorizontalLayout {
     private TextField filter;
     private CampaignForm form;
     private Button newCampaign;
-
     private Grid<Campaign> grid;
-
-    private ReviewFootageView reviewView = new ReviewFootageView();
 
     public MyCampaigns() {
         setSizeFull();
@@ -83,7 +81,8 @@ public class MyCampaigns extends HorizontalLayout {
 
     // Set up data for review footage view
     private void goToReview(Campaign c) {
-        reviewView.setClipToReview(c.droneClip);
+        ClipBeingReviewed.getInstance().setDroneClip(c.droneClip);
+        ClipBeingReviewed.getInstance().setCampaignName(c.getName());
         getUI().get().navigate("ReviewFootage");
     }
 }
