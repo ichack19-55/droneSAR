@@ -15,7 +15,7 @@ import com.vaadin.flow.router.Route;
 @PageTitle("My Campaigns")
 public class MyCampaigns extends HorizontalLayout {
 
-    public static final String VIEW_NAME = "My Campaigns";
+    public static final String VIEW_NAME = "Campaigns";
 
     private TextField filter;
     private CampaignForm form;

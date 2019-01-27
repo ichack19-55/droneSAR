@@ -26,7 +26,7 @@ public class MainLayout extends FlexLayout implements RouterLayout {
 
         menu = new Menu();
         menu.addView(MyCampaigns.class, MyCampaigns.VIEW_NAME, VaadinIcon.USER.create());
-        menu.addView(ReviewFootageView.class, ReviewFootageView.VIEW_NAME, VaadinIcon.FILM.create());
+        //menu.addView(ReviewFootageView.class, ReviewFootageView.VIEW_NAME, VaadinIcon.FILM.create());
         add(menu);
     }
 }
