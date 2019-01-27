@@ -10,6 +10,7 @@ import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;
 import com.vaadin.flow.component.html.Label;
 import com.vaadin.flow.component.orderedlayout.FlexLayout;
+import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.tabs.Tab;
 import com.vaadin.flow.component.tabs.Tabs;
@@ -29,6 +30,7 @@ import java.util.Optional;
 @PageTitle("Manage a Campaign")
 public class CampaignManager extends VerticalLayout {
 
+    public static final String VIEW_NAME = "Manage";
     private static final String VIDEO_FP_PREFIX = "src/main/webapp/videos/";
 
     private Tabs tabs = new Tabs();
@@ -41,12 +43,24 @@ public class CampaignManager extends VerticalLayout {
     private Upload upload;
     private Button save;
     private Button delete;
+    private Button back;
 
     private MemoryBuffer buffer;
 
     public CampaignManager() {
+        back = new Button("Done");
+        back.addThemeVariants(ButtonVariant.LUMO_SUCCESS);
+        back.addClickListener(event -> returnToList());
+
+        HorizontalLayout horizontal = new HorizontalLayout();
+        horizontal.setWidth("100%");
         tabs.setWidth("100%");
-        add(tabs);
+
+        horizontal.add(tabs);
+        horizontal.add(back);
+        back.getStyle().set("margin-left", "auto");
+
+        add(horizontal);
         add(content);
         setWidth("100%");
 
@@ -159,5 +173,9 @@ public class CampaignManager extends VerticalLayout {
         campaign.addDroneClip(new DroneClip(droneVideo, ReviewPriority.HIGH));
         CampaignStore.getInstance().addCampaign(campaign);
 
+    }
+
+    private void returnToList(){
+        getUI().get().navigate("MyCampaigns");
     }
 }
