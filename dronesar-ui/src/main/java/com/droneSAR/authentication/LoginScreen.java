@@ -74,14 +74,17 @@ public class LoginScreen extends FlexLayout {
         password.setValue("iscool");
 
         HorizontalLayout buttons = new HorizontalLayout();
+        buttons.setWidth("310px");
         loginForm.add(new Html("<br/>"));
         loginForm.add(buttons);
 
         buttons.add(signup = new Button("Sign Up"));
+
         signup.addClickListener(event -> signup());
         signup.addThemeVariants(ButtonVariant.LUMO_SUCCESS, ButtonVariant.LUMO_PRIMARY);
 
         buttons.add(login = new Button("Login"));
+        login.getStyle().set("margin-left", "60px");
         login.addClickListener(event -> login());
         login.addThemeVariants(ButtonVariant.LUMO_SUCCESS, ButtonVariant.LUMO_PRIMARY);
 
