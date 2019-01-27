@@ -26,7 +26,6 @@ public class CompileTest {
     public void canGrabFrameFromVideo() {
         DroneClip dc = new DroneClip(new File("/Users/Matt/Desktop/test.mp4"), ReviewPriority.HIGH);
         User u = new User(1);
-        dc.startReviewing(u);
 
         for (int i = 0; i < 10; i++) {
             /*String path = dc.getNextFrameToReviewFile(u);
@@ -42,7 +41,5 @@ public class CompileTest {
                 e.printStackTrace();
             }
         }
-        dc.finishReviewing(u);
-
     }
 }

@@ -3,6 +3,7 @@ package com.droneSAR.myCampaigns;
 import com.droneSAR.MainLayout;
 import com.droneSAR.backend.Campaign;
 import com.droneSAR.backend.CampaignStore;
+import com.droneSAR.review.ReviewFootageView;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;
 import com.vaadin.flow.component.icon.VaadinIcon;
@@ -27,6 +28,7 @@ public class MyCampaigns extends HorizontalLayout {
 
     private Grid<Campaign> grid;
 
+    private ReviewFootageView reviewView = new ReviewFootageView();
 
     public MyCampaigns() {
         setSizeFull();
@@ -39,8 +41,7 @@ public class MyCampaigns extends HorizontalLayout {
         grid.setItems(CampaignStore.getInstance().getCampaignStore());
         grid.addColumn(Campaign::getName).setHeader("Campaign Name");
         grid.addColumn(Campaign::getCampaignId).setHeader("Campaign ID");
-        grid.addColumn(Campaign::getCrowdReviewers).setHeader("Reviewers");
-        grid.addColumn(new NativeButtonRenderer<Campaign>("Review footage", item -> goToReview()));
+        grid.addColumn(new NativeButtonRenderer<>("Review footage", this::goToReview));
 
         barAndGridLayout.add(topLayout);
         barAndGridLayout.add(grid);
@@ -52,7 +53,7 @@ public class MyCampaigns extends HorizontalLayout {
         add(form);
     }
 
-    public HorizontalLayout createTopBar() {
+    private HorizontalLayout createTopBar() {
         filter = new TextField();
         filter.setPlaceholder("Filter name, availability or category");
         // Apply the filter to grid's data provider. TextField value is never null
@@ -68,7 +69,6 @@ public class MyCampaigns extends HorizontalLayout {
         //            newCampaign.isEnabled(false);
         //        }
 
-
         topLayout.setWidth("100%");
         topLayout.add(filter);
         topLayout.add(newCampaign);
@@ -77,11 +77,13 @@ public class MyCampaigns extends HorizontalLayout {
         return topLayout;
     }
 
-    public void showForm(boolean show){
+    public void showForm(boolean show) {
         form.setVisible(show);
     }
 
-    public void goToReview(){
-
+    // Set up data for review footage view
+    private void goToReview(Campaign c) {
+        reviewView.setClipToReview(c.droneClip);
+        getUI().get().navigate("ReviewFootage");
     }
 }

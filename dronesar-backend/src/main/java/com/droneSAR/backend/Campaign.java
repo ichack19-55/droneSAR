@@ -1,23 +1,16 @@
 package com.droneSAR.backend;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Set;
-
 public class Campaign {
 
     private static int id;
 
     private final int campaignId;
     private final String name;
-    private Set<User> crowdReviewers;
-    private List<DroneClip> droneClips;
+    public DroneClip droneClip;
 
     public Campaign(String name) {
         this.name = name;
-
         campaignId = id++;
-        droneClips = new ArrayList<>();
     }
 
     public String getName() {
@@ -28,15 +21,11 @@ public class Campaign {
         return campaignId;
     }
 
-    public Set<User> getCrowdReviewers() {
-        return this.crowdReviewers;
-    }
-
     public void addDroneClip(DroneClip clip) {
-        droneClips.add(clip);
+        droneClip = clip;
     }
 
-    public void removeDroneClip(DroneClip clip) {
-        droneClips.remove(clip);
+    public void removeDroneClip() {
+        droneClip = null;
     }
 }

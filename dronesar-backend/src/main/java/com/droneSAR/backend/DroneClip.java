@@ -31,12 +31,6 @@ public class DroneClip {
     // How much of this current clip has been reviewed already, in seconds
     private int reviewedUpTo = 0;
 
-    // The user currently reviewing this clip
-    private User reviewer;
-
-    // Whether this clip is already being reviewed by someone
-    private final AtomicBoolean isBeingReviewed = new AtomicBoolean(false);
-
     // Store the times at which this clip has been flagged (in seconds)
     private Set<Integer> flags = new HashSet<>();
 
@@ -63,34 +57,11 @@ public class DroneClip {
         this.priority = priority;
     }
 
-    public boolean canReview() {
-        return !isBeingReviewed.get();
+    public void addFlag() {
+        flags.add(reviewedUpTo);
     }
 
-    public boolean startReviewing(User user) {
-        boolean canReview = isBeingReviewed.compareAndSet(false, true);
-        if (canReview) {
-            reviewer = user;
-            return true;
-        }
-        return false;
-    }
-
-    public void finishReviewing(User user) {
-        if (user.equals(reviewer)) {
-            isBeingReviewed.set(false);
-        }
-    }
-
-    public void addFlag(int second) {
-        flags.add(second);
-    }
-
-    public String getNextFrameToReviewFile(User user) {
-        if (!user.equals(reviewer)) {
-            return null;
-        }
-
+    public String getNextFrameToReviewFile() {
         reviewedUpTo = reviewedUpTo + priority.getSecondsBetweenFrames();
         if (reviewedUpTo > length) {
             return null;

@@ -19,14 +19,11 @@ import com.vaadin.flow.server.VaadinSession;
 @PageTitle("Review Footage")
 public class ReviewFootageView extends HorizontalLayout {
 
-    public static final String VIEW_NAME = "Review Footage";
-
     private Button nextImage;
     private Button flagImage;
     private String campaignName;
     private Image img;
 
-    private User user;
     private DroneClip clip;
 
     public ReviewFootageView() {
@@ -34,18 +31,16 @@ public class ReviewFootageView extends HorizontalLayout {
     }
 
     // Call into this before loading the page
-    public void setClipToReview(User user, DroneClip clip) {
-        if (user == null || clip == null) {
+    public void setClipToReview(DroneClip clip) {
+        if (clip == null) {
             return;
         }
 
-        String filename = clip.getNextFrameToReviewFile(user);
-        if (filename == null) {
-            clip.finishReviewing(user);
-            // TODO: clean up, route back to previous screen?
+        this.clip = clip;
+        String filename = clip.getNextFrameToReviewFile();
+        if (filename != null) {
+            loadStaticImage(filename);
         }
-
-        loadStaticImage(filename);
     }
 
     private void buildUI() {
@@ -125,10 +120,10 @@ public class ReviewFootageView extends HorizontalLayout {
     }
 
     private void right() {
-        setClipToReview(user, clip);
+        setClipToReview(clip);
     }
 
     private void flag() {
-
+        clip.addFlag();
     }
 }
