@@ -1,6 +1,7 @@
 package com.droneSAR.review;
 
 import com.droneSAR.MainLayout;
+import com.droneSAR.backend.ClipBeingReviewed;
 import com.droneSAR.backend.DroneClip;
 import com.droneSAR.backend.User;
 import com.vaadin.flow.component.html.Image;
@@ -19,20 +20,22 @@ import com.vaadin.flow.server.VaadinSession;
 @PageTitle("Review Footage")
 public class ReviewFootageView extends HorizontalLayout {
 
-    private Button nextImage;
-    private Button flagImage;
-    private String campaignName;
     private Image img;
-
     private DroneClip clip;
+    private String name = "Drone Clip Reviewer";
 
     public ReviewFootageView() {
+        // Select most recently set drone clip to review at load time
+        clip = ClipBeingReviewed.getInstance().getDroneClip();
+        name = ClipBeingReviewed.getInstance().getCampaignName();
+
         buildUI();
     }
 
     // Call into this before loading the page
-    public void setClipToReview(DroneClip clip) {
+    private void setClipToReview(DroneClip clip) {
         if (clip == null) {
+            System.out.println("No clip provided!");
             return;
         }
 
@@ -44,7 +47,6 @@ public class ReviewFootageView extends HorizontalLayout {
     }
 
     private void buildUI() {
-        campaignName = "Placeholder Campaign Name";
         setSizeFull();
 
         HorizontalLayout topBar = createTopBar();
@@ -78,7 +80,8 @@ public class ReviewFootageView extends HorizontalLayout {
     }
 
     private HorizontalLayout createTopBar() {
-        Span campaign = new Span(campaignName);
+        Span campaign = new Span(name);
+
         campaign.getStyle().set("margin-left", "auto");
         campaign.getStyle().set("margin-right", "auto");
         campaign.getStyle().set("font-size", "30px");
@@ -89,21 +92,17 @@ public class ReviewFootageView extends HorizontalLayout {
         topLayout.add(campaign);
         topLayout.setAlignSelf(Alignment.CENTER, campaign);
 
-//        topLayout.getElement().addEventListener("keypress", event -> left()).setFilter("event.key == 'Left'");
-//        topLayout.getElement().addEventListener("keypress", event -> right()).setFilter("event.key == 'Right'");
-//        topLayout.getElement().addEventListener("keypress", event -> flag()).setFilter("event.key == 'Space'");
-
         return topLayout;
     }
 
     private HorizontalLayout createBtmBar() {
-        nextImage = new Button("Next Image");
+        Button nextImage = new Button("Next Image");
         nextImage.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
         nextImage.setIcon(VaadinIcon.ANGLE_RIGHT.create());
         nextImage.setIconAfterText(true);
         nextImage.addClickListener(click -> right());
 
-        flagImage = new Button("Flag");
+        Button flagImage = new Button("Flag");
         flagImage.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
         flagImage.setIcon(VaadinIcon.FLAG.create());
         flagImage.setIconAfterText(true);
@@ -120,7 +119,7 @@ public class ReviewFootageView extends HorizontalLayout {
     }
 
     private void right() {
-        setClipToReview(clip);
+        setClipToReview(ClipBeingReviewed.getInstance().getDroneClip());
     }
 
     private void flag() {
