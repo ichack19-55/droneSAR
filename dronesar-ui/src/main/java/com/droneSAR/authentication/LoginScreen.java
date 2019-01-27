@@ -119,7 +119,7 @@ public class LoginScreen extends FlexLayout {
         login.setEnabled(false);
         try {
             if (userAccessControl.signIn(username.getValue(), password.getValue())) {
-                getUI().get().navigate("DiscoverCampaigns");
+                getUI().get().navigate("MyCampaigns");
             } else {
                 showNotification(new Notification("Login failed."));
                 username.focus();

@@ -85,7 +85,7 @@ public class CampaignForm extends Div {
             InputStream stream = buffer.getInputStream();
             byte[] bufferByte = new byte[stream.available()];
             stream.read(bufferByte);
-            File targetFile = new File(productName.getValue() + ".mp4");
+            File targetFile = new File("src/main/webapp/videos/" + productName.getValue() + ".mp4");
             OutputStream outStream = new FileOutputStream(targetFile);
             outStream.write(bufferByte);
         }
