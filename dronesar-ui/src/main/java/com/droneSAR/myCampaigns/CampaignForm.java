@@ -9,7 +9,11 @@ import com.vaadin.flow.component.upload.Receiver;
 import com.vaadin.flow.data.value.ValueChangeMode;
 import com.vaadin.flow.component.upload.Upload;
 
-import com.vaadin.flow.component.upload.receivers.MultiFileMemoryBuffer;
+import com.vaadin.flow.component.upload.receivers.MemoryBuffer;
+import com.vaadin.flow.component.upload.receivers.FileData;
+
+
+import java.io.*;
 
 
 public class CampaignForm extends Div {
@@ -24,6 +28,7 @@ public class CampaignForm extends Div {
     private Button delete;
     private MyCampaigns MyCamp;
     private Receiver receiver;
+    private MemoryBuffer buffer;
 
     public CampaignForm(MyCampaigns mycamp) {
         MyCamp = mycamp;
@@ -39,23 +44,21 @@ public class CampaignForm extends Div {
         content.add(productName);
 
 
-        MultiFileMemoryBuffer fileBuffer = new MultiFileMemoryBuffer();
-        upload = new Upload(fileBuffer);
+        buffer = new MemoryBuffer();
+        buffer.receiveUpload("out", ".mp4");
+        upload = new Upload(buffer);
         upload.setAcceptedFileTypes("video/mp4");
-        upload.setReceiver(receiver);
-        //receiver.receiveUpload(fileBuffer.getFileData(), )
+
 
         content.add(upload);
 
         save = new Button("Save");
         save.setWidth("100%");
         save.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
-//        save.addClickListener(event -> {
-//            if (currentProduct != null
-//                    && binder.writeBeanIfValid(currentProduct)) {
-//                viewLogic.saveProduct(currentProduct);
-//            }
-//        });
+        save.addClickListener(event -> {
+            saveData();
+            MyCamp.showForm(false);
+        });
 
 
         cancel = new Button("Cancel");
@@ -77,12 +80,19 @@ public class CampaignForm extends Div {
         content.add(save, delete, cancel);
     }
 
-//    public HorizontalLayout uploadFiles(){
-//
-//
-//        HorizontalLayout layout = new HorizontalLayout();
-//        layout.setWidth("100%");
-//        layout.add(upload);
-//        return layout;
-//    }
+    public void saveData(){
+        try {
+            InputStream stream = buffer.getInputStream();
+            byte[] bufferByte = new byte[stream.available()];
+            stream.read(bufferByte);
+            File targetFile = new File(productName.getValue() + ".mp4");
+            OutputStream outStream = new FileOutputStream(targetFile);
+            outStream.write(bufferByte);
+        }
+        catch(IOException e){
+            e.printStackTrace();
+        }
+
+    }
+
 }

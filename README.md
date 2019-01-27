@@ -1,4 +1,4 @@
-run#DroneSAR Crowdsourced Search and Rescue
+#DroneSAR Crowdsourced Search and Rescue
 
 A platform to speed up search and rescue operations by crowdsourcing the analysis of drone footage.
 
