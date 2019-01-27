@@ -82,12 +82,20 @@ public class DroneClip {
         }
     }
 
+    public void addFlag(int second) {
+        flags.add(second);
+    }
+
     public String getNextFrameToReviewFile(User user) {
         if (!user.equals(reviewer)) {
             return null;
         }
 
         reviewedUpTo = reviewedUpTo + priority.getSecondsBetweenFrames();
+        if (reviewedUpTo > length) {
+            return null;
+        }
+
         return getFrameAtTimestamp(reviewedUpTo);
     }
 

@@ -1,7 +1,9 @@
 package com.droneSAR.backend;
 
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.LinkedHashMap;
+import java.util.Set;
 
 /*
  * Singleton pattern store for Campaigns.
@@ -9,25 +11,22 @@ import java.util.LinkedHashMap;
 public class CampaignStore {
 
   private static CampaignStore store = new CampaignStore();
-  private HashMap<Integer, Campaign>  campaignStore = new LinkedHashMap<>();
+
+  private Set<Campaign> campaignStore = new HashSet<>();
 
   public static CampaignStore getInstance() {
     return store;
   }
 
   public void addCampaign(Campaign campaign) {
-    this.campaignStore.put(campaign.getCampaignId(), campaign);
-  }
-
-  public Campaign getCampaign(int id) {
-    return this.campaignStore.get(id);
-  }
-
-  public void removeCampaign(Integer id) {
-    this.campaignStore.remove(id);
+    this.campaignStore.add(campaign);
   }
 
   public void removeCampaign(Campaign campaign) {
-    this.campaignStore.remove(campaign.getCampaignId());
+    this.campaignStore.remove(campaign);
+  }
+
+  public Set<Campaign> getCampaignStore() {
+    return campaignStore;
   }
 }

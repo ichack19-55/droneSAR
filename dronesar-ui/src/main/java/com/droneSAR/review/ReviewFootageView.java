@@ -1,6 +1,8 @@
 package com.droneSAR.review;
 
-import com.droneSAR.authentication.CurrentUser;
+import com.droneSAR.MainLayout;
+import com.droneSAR.backend.DroneClip;
+import com.droneSAR.backend.User;
 import com.vaadin.flow.component.html.Image;
 import com.vaadin.flow.component.html.Span;
 import com.vaadin.flow.component.icon.VaadinIcon;
@@ -13,22 +15,37 @@ import com.vaadin.flow.router.Route;
 import com.vaadin.flow.server.VaadinServletService;
 import com.vaadin.flow.server.VaadinSession;
 
-import com.droneSAR.MainLayout;
-
 @Route(value = "ReviewFootage", layout = MainLayout.class)
 @PageTitle("Review Footage")
 public class ReviewFootageView extends HorizontalLayout {
 
     public static final String VIEW_NAME = "Review Footage";
 
-    private Button lastImage;
     private Button nextImage;
     private Button flagImage;
     private String campaignName;
     private Image img;
 
+    private User user;
+    private DroneClip clip;
+
     public ReviewFootageView() {
         buildUI();
+    }
+
+    // Call into this before loading the page
+    public void setClipToReview(User user, DroneClip clip) {
+        if (user == null || clip == null) {
+            return;
+        }
+
+        String filename = clip.getNextFrameToReviewFile(user);
+        if (filename == null) {
+            clip.finishReviewing(user);
+            // TODO: clean up, route back to previous screen?
+        }
+
+        loadStaticImage(filename);
     }
 
     private void buildUI() {
@@ -85,11 +102,6 @@ public class ReviewFootageView extends HorizontalLayout {
     }
 
     private HorizontalLayout createBtmBar() {
-        lastImage = new Button("Last Image");
-        lastImage.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
-        lastImage.setIcon(VaadinIcon.ANGLE_LEFT.create());
-        lastImage.addClickListener(click -> left());
-
         nextImage = new Button("Next Image");
         nextImage.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
         nextImage.setIcon(VaadinIcon.ANGLE_RIGHT.create());
@@ -106,22 +118,17 @@ public class ReviewFootageView extends HorizontalLayout {
         HorizontalLayout btmLayout = new HorizontalLayout();
         btmLayout.setWidth("100%");
 
-        btmLayout.add(lastImage);
         btmLayout.add(nextImage);
         btmLayout.add(flagImage);
 
         return btmLayout;
     }
 
-    private void left() {
-        System.out.println("Go left");
-    }
-
     private void right() {
-        System.out.println("Go right");
+        setClipToReview(user, clip);
     }
 
     private void flag() {
-        System.out.println("Flag");
+
     }
 }

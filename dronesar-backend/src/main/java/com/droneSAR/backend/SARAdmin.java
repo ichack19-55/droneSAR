@@ -26,7 +26,7 @@ public class SARAdmin extends User {
     public void deleteCampaign() {
         if (this.hasCampaignBeenCreated()) {
 
-            Campaign campaign = campaignStore.getCampaign(createdCampaignId);
+            //Campaign campaign = campaignStore.getCampaign(createdCampaignId);
             Set<User> crowdReviewers = campaign.getCrowdReviewers();
 
             // unsubscribe all users to campaign:
