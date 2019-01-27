@@ -63,7 +63,7 @@ public class MyCampaigns extends HorizontalLayout {
         newCampaign = new Button("Add Campaign");
         newCampaign.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
         newCampaign.setIcon(VaadinIcon.PLUS_CIRCLE.create());
-        newCampaign.addClickListener(event -> showForm(true));
+        newCampaign.addClickListener(event -> goToManager());
         //        Disable if user already has campaign
         //        if(user has campaign){
         //            newCampaign.isEnabled(false);
@@ -85,5 +85,9 @@ public class MyCampaigns extends HorizontalLayout {
     private void goToReview(Campaign c) {
         reviewView.setClipToReview(c.droneClip);
         getUI().get().navigate("ReviewFootage");
+    }
+
+    private void goToManager(){
+        getUI().get().navigate("Manage");
     }
 }
