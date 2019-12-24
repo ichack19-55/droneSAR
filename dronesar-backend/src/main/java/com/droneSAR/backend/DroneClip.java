@@ -84,7 +84,8 @@ public class DroneClip {
             BufferedImage bufferedImage = deepCopy(converter.convert(frameGrabber.grabImage()));
 
             // Write frame grab to temp file
-            File img = File.createTempFile("frame_at_" + reviewedUpTo + "s", ".jpg");
+            //File img = File.createTempFile("frame_at_" + reviewedUpTo + "s", ".jpg");
+            File img = new File("stills://still_frame.jpg");
             ImageIO.write(bufferedImage, "JPG", img);
             return img.getAbsolutePath();
         } catch (IOException e) {

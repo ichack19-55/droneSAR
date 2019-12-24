@@ -23,7 +23,7 @@ public class ReviewFootageView extends HorizontalLayout {
 
     private Image img;
     private DroneClip clip;
-    private String name = "Drone Clip Reviewer";
+    private String name;
 
     public ReviewFootageView() {
         // Select most recently set drone clip to review at load time
@@ -56,11 +56,12 @@ public class ReviewFootageView extends HorizontalLayout {
     private void loadStaticImage(String filepath) {
         if (filepath == null) {
             filepath = VaadinServletService.getCurrent()
-                .resolveResource("frontend://img/Placeholder.png",
+                .resolveResource("stills://still_frame.jpg",
                     VaadinSession.getCurrent().getBrowser());
         }
         img = new Image(filepath, "");
         img.setHeight("60%");
+        add(img);
     }
 
     // Call into this before loading the page
